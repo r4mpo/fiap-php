@@ -1,0 +1,15 @@
+{
+    "name": "erick/crud-mvc-php-default",
+    "autoload": {
+        "psr-4": {
+            "src\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "r4mpo",
+            "email": "erick1souza1ago04@gmail.com"
+        }
+    ],
+    "require": {}
+}
