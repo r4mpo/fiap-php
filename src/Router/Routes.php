@@ -18,7 +18,8 @@ class Routes
             '/' => 'HomeController@index',
             '/login' => 'UsersController@login',
             '/logout' => 'UsersController@logout',
-            '/exeLogin' => 'UsersController@exeLogin'
+            '/exeLogin' => 'UsersController@exeLogin',
+            '/students' => 'StudentsController@index',
         ];
     }
 }

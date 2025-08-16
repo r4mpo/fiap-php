@@ -21,7 +21,13 @@ class LoginService
     /**
      * Realiza o processo de login do usuário.
      *
-     * @param array $params Dados enviados pelo formulário (email e password).
+     * Recebe os dados do formulário (email e senha) e verifica se o usuário existe
+     * e se a senha está correta. Caso a autenticação seja bem-sucedida, armazena
+     * os dados do usuário na sessão.
+     *
+     * @param array $params Array com os dados do formulário:
+     *                      - 'email' (string): email do usuário
+     *                      - 'password' (string): senha do usuário
      * @return array Retorna um array associativo com:
      *   - code (int): código de status da autenticação (111 = sucesso, 333 = erro)
      *   - message (string): mensagem informando o resultado da operação
@@ -33,14 +39,18 @@ class LoginService
         $result['code'] = 333;
         $result['message'] = 'Usuário não encontrado em nossos registros.';
 
-        // Consulta no banco de dados com email e senha (criptografada em MD5).
-        $data = $this->usersRepository->findUser($params['email'], md5($params['password']));
+        // Consulta no banco de dados com email.
+        $data = $this->usersRepository->findUser($params['email']);
 
         // Se o usuário for encontrado, retorna sucesso e registra a sessão.
         if (!empty($data) && is_array($data)) {
-            $result['code'] = 111;
-            $result['message'] = 'Autenticação efetuada com sucesso.';
-            $_SESSION['authenticated'] = $data[0]; // Armazena os dados do usuário na sessão.
+            $result['message'] = 'E-mail ou senha de acesso incorreto(s).';
+            $user = $data[0];
+            if (password_verify($params['password'], $user['password'])) {
+                $result['code'] = 111;
+                $result['message'] = 'Autenticação efetuada com sucesso.';
+                $_SESSION['authenticated'] = $user;  // Armazena os dados do usuário na sessão.
+            }
         }
 
         return $result;

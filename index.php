@@ -13,6 +13,9 @@ require 'vendor/autoload.php';
 // Carrega o arquivo de constantes que será utilizado no projeto
 require 'config/constants.php';
 
+// Carrega o arquivo de funções que será utilizado no projeto
+require 'config/functions.php';
+
 // Cria a instância principal do núcleo da aplicação
 $core = new Core();
 

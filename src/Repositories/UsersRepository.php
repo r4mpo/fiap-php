@@ -23,18 +23,15 @@ class UsersRepository extends Repository
      *
      * Cria os parâmetros de filtro para consulta, incluindo:
      * - email
-     * - password
      * - deleted_at IS NULL (usuários não deletados)
      *
      * @param string $email E-mail do usuário
-     * @param string $password Senha do usuário (hash)
      * @return array Array associativo com os dados do usuário, ou vazio se não encontrado
      */
-    public function findUser(string $email, string $password): array
+    public function findUser(string $email): array
     {
         $params = [];
         $params['FILTER']['email'] = $email;
-        $params['FILTER']['password'] = $password;
         $params['FILTER']['deleted_at IS NULL'] = NULL;
 
         // Chama o método consult() do Repository para executar a query

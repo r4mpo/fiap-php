@@ -13,7 +13,6 @@ class Repository
     private $db_user = DB_USER;
     private $db_pass = DB_PASS;
     private $db_name = DB_NAME;
-
     // Nome do modelo utilizado nas operações
     private $model;
 
@@ -36,7 +35,7 @@ class Repository
      *
      * @return PDO Instância PDO da conexão
      */
-    public function getConnection(): PDO
+    protected function getConnection(): PDO
     {
         try {
             $pdo = new PDO(
@@ -66,6 +65,7 @@ class Repository
      * O array $params permite definir:
      * - 'FIELDS'  => campos que deseja selecionar (default: '*')
      * - 'FILTER'  => array de filtros no formato ['campo' => 'valor']
+     * - ORDERBY   => string contendo o valor de ordenação ['ex.: id DESC ']
      *
      * Observações:
      * - Se FILTER estiver vazio, retorna todos os registros.
@@ -74,7 +74,7 @@ class Repository
      * @param array $params Parâmetros da consulta ['FIELDS' => 'campos', 'FILTER' => ['campo' => 'valor']]
      * @return array Array associativo com os resultados da consulta
      */
-    public function consult($params): array
+    protected function consult($params): array
     {
         // Monta os campos a serem selecionados
         $query = 'SELECT ';
@@ -89,6 +89,9 @@ class Repository
                 $query .= $field . (!empty($value) ? (' = ' . '"' . $value . '"') : '') . ($end ? '' : ' AND ');
             }
         }
+
+        // Define se haverá alguma ordenação para a query
+        $query .= !empty($params) && isset($params['ORDERBY']) ? (' ORDER BY ' . $params['ORDERBY']) : '';
 
         // Executa a query diretamente
         $stmt = $this->getConnection()->query($query);
