@@ -4,7 +4,7 @@
     
     <!-- Container que permite scroll horizontal -->
     <div class="table-responsive">
-        <table class="table table-bordered table-hover text-center">
+        <table class="table table-bordered table-hover text-center mb-5">
             <thead class="table-light">
                 <tr class="sticky-top">
                     <th>#</th>
