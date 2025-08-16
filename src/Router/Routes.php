@@ -20,6 +20,7 @@ class Routes
             '/logout' => 'UsersController@logout',
             '/exeLogin' => 'UsersController@exeLogin',
             '/students' => 'StudentsController@index',
+            '/classes' => 'ClassesController@index',
         ];
     }
 }
