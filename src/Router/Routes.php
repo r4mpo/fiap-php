@@ -17,6 +17,7 @@ class Routes
         return [
             '/' => 'HomeController@index',
             '/login' => 'UsersController@login',
+            '/logout' => 'UsersController@logout',
             '/exeLogin' => 'UsersController@exeLogin'
         ];
     }

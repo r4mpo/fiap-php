@@ -1,0 +1,64 @@
+/* Ajuste do logo */
+.logo-img {
+    max-height: 40px;
+}
+
+/* Animação suave no mobile menu */
+#mobileMenu.collapse {
+    display: none;
+}
+
+#mobileMenu.show {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    background: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+.feature-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease-in-out;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.icon-box {
+    font-size: 2rem;
+    color: #0d6efd;
+}
+
+@media (min-width: 992px) {
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+        padding: 0.75rem;
+        text-align: center;
+    }
+}

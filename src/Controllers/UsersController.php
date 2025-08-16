@@ -46,12 +46,13 @@ class UsersController extends Controller
     /**
      * Realiza o logout do usuário.
      * Deve encerrar a sessão e redirecionar para a página de login
-     * (ainda não implementado).
      *
      * @return void
      */
     public function logout(): void
     {
-        // Implementar lógica de logout (ex: destruir sessão e redirecionar)
+        session_destroy();
+        header('Location: ' . BASE_URL);
+        exit;
     }
 }

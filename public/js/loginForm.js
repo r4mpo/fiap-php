@@ -42,8 +42,7 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response)
                 if (response.code == '111') {
-                    message('Sucesso!', response.message, 'success');
-                    window.location.href = baseUrl + '/';
+                    window.location.href = baseUrl;
                 } else {
                     message('Oops!', response.message ?? 'Erro ao fazer login.', 'error');
                 }
