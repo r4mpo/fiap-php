@@ -45,7 +45,7 @@ class UsersController extends Controller
 
     /**
      * Realiza o logout do usuário.
-     * Deve encerrar a sessão e redirecionar para a página de login
+     * Deve destruir a sessão e redirecionar para a página de login
      *
      * @return void
      */

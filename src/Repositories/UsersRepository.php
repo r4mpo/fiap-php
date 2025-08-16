@@ -30,7 +30,7 @@ class UsersRepository extends Repository
      * @param string $password Senha do usuário (hash)
      * @return array Array associativo com os dados do usuário, ou vazio se não encontrado
      */
-    public function findUser($email, $password): array
+    public function findUser(string $email, string $password): array
     {
         $params = [];
         $params['FILTER']['email'] = $email;
