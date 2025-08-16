@@ -1,26 +1,23 @@
-<body class="bg-light d-flex align-items-center justify-content-center">
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
     <div class="card shadow-lg w-100" style="max-width: 480px;">
         <div class="card-body">
             <div class="text-center">
-                <h1 class="card-title h3">Sign in</h1>
-                <p class="card-text text-muted">Sign in below to access your account</p>
+                <h1 class="card-title h3"><strong>LOGIN</strong></h1>
+                <p class="card-text text-muted"><em>Preencha com seus dados para prosseguir...</em></p>
             </div>
             <div class="mt-4">
-                <form action="">
+                <form id="loginForm" action="<?php echo BASE_URL ?>/exeLogin" onsubmit="return false;">
                     <div class="mb-4">
-                        <label for="email" class="form-label text-muted">Email Address</label>
-                        <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+                        <label for="email" class="form-label text-muted">E-mail</label>
+                        <input type="email" class="form-control" id="email" autocomplete="off" placeholder="E-mail" required>
                     </div>
                     <div class="mb-4">
-                        <label for="password" class="form-label text-muted">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password" required>
+                        <label for="password" class="form-label text-muted">Senha</label>
+                        <input type="password" class="form-control" id="password" autocomplete="off" placeholder="Senha" required>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-dark btn-lg">Sign in</button>
+                        <button type="submit" class="btn btn-dark btn-lg">Entrar</button>
                     </div>
-                    <p class="text-center text-muted mt-4">Don't have an account yet?
-                        <a href="#!" class="text-decoration-none">Sign up</a>.
-                    </p>
                 </form>
             </div>
         </div>

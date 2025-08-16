@@ -6,8 +6,12 @@ use Src\Core\Controller;
 
 class UsersController extends Controller
 {
-    public function index()
+    public function login(): void
     {
-        var_dump('teste');
+        $this->view('users/loginForm', []);
+    }
+
+    public function logout() {
+        // 
     }
 }
