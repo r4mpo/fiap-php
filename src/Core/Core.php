@@ -3,7 +3,6 @@
 namespace Src\Core;
 
 use Src\Controllers\ErrorsController;
-use Src\Controllers\UsersController;
 
 class Core
 {
