@@ -66,6 +66,7 @@ class Repository
      * - 'FIELDS'  => campos que deseja selecionar (default: '*')
      * - 'FILTER'  => array de filtros no formato ['campo' => 'valor']
      * - ORDERBY   => string contendo o valor de ordenação ['ex.: id DESC ']
+     * - GROUPBY   => string contendo preferência de agrupamento ['ex.: model.id']
      *
      * Observações:
      * - Se FILTER estiver vazio, retorna todos os registros.
@@ -81,6 +82,15 @@ class Repository
         $query .= !empty($params) && isset($params['FIELDS']) ? $params['FIELDS'] : '*';
         $query .= ' FROM ' . $this->model->getTable();
 
+        // Monta agfrupamentos JOIN se existirem
+        if (!empty($params) && isset($params['JOIN'])) {
+            $query .= count($params['JOIN']) == 1 ? ' ' : '';
+            foreach ($params['JOIN'] as $value) {
+                $end = end($params['JOIN']) == $value;
+                $query .= ($end ? '' : ' ') . $value['TYPE'] . ' JOIN ' . $value['TABLE'] . ' ON ' . $value['CONDITIONS'];
+            }
+        }
+
         // Monta filtros WHERE se existirem
         if (!empty($params) && isset($params['FILTER'])) {
             $query .= ' WHERE ';
@@ -89,6 +99,9 @@ class Repository
                 $query .= $field . (!empty($value) ? (' = ' . '"' . $value . '"') : '') . ($end ? '' : ' AND ');
             }
         }
+
+        // Define se haverá algum agrupamento para a query
+        $query .= !empty($params) && isset($params['GROUPBY']) ? (' GROUP BY ' . $params['GROUPBY']) : '';
 
         // Define se haverá alguma ordenação para a query
         $query .= !empty($params) && isset($params['ORDERBY']) ? (' ORDER BY ' . $params['ORDERBY']) : '';

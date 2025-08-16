@@ -33,7 +33,7 @@ class StudentsService
      *    - Codifica o `id` em base64 para segurança ou uso em URLs.
      *    - Mantém o `name` e `email` como estão.
      *    - Converte a `date_of_birth` do formato YYYY-MM-DD para DD/MM/YYYY.
-     *    - Formata o CPF utilizando a função `format_cpf()`.
+     *    - Formata o CPF utilizando a função `formatCpf()`.
      * 3. Retorna um array com todos os alunos já formatados.
      *
      * @return array Lista de alunos ativos com dados formatados para exibição.
@@ -51,7 +51,7 @@ class StudentsService
                     'name' => $student['name'],
                     'email' => $student['email'],
                     'date_of_birth' => date('d/m/Y', strtotime($student['date_of_birth'])),
-                    'document' => format_cpf($student['document']),
+                    'document' => formatCpf($student['document']),
                 ];
             }
         }

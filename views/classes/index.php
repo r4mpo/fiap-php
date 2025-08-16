@@ -8,22 +8,20 @@
             <thead class="table-light">
                 <tr class="sticky-top">
                     <th>#</th>
-                    <th>Aluno</th>
-                    <th>E-mail</th>
-                    <th data-is-date="true">Data de Nascimento</th>
-                    <th>CPF</th>
+                    <th>Turma</th>
+                    <th>Descrição</th>
+                    <th>Qtd de Alunos</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if (count($students) > 0) {
-                    foreach ($students as $index => $student) { ?>
+                <?php if (count($classes) > 0) {
+                    foreach ($classes as $index => $class) { ?>
                         <tr>
                             <td><?php echo $index ?></td>
-                            <td><?php echo $student['name'] ?></td>
-                            <td><?php echo $student['email'] ?></td>
-                            <td><?php echo $student['date_of_birth'] ?></td>
-                            <td><?php echo $student['document'] ?></td>
+                            <td><?php echo $class['name'] ?></td>
+                            <td><?php echo $class['description'] ?></td>
+                            <td><?php echo $class['qttStudents'] ?></td>
                             <td>
                                 <button type="button" class="btn btn-outline-primary"><i class="ri-pencil-fill"></i></button>
                                 <button type="button" class="btn btn-outline-danger"><i class="ri-delete-bin-line"></i></button>
@@ -32,7 +30,7 @@
                     <?php } ?>
                 <?php } else { ?>
                     <tr>
-                        <td colspan="6">Nenhum registro de <strong>alunos</strong> foi encontrado em nosso sistema.</td>
+                        <td colspan="6">Nenhum registro de <strong>turmas</strong> foi encontrado em nosso sistema.</td>
                     </tr>
                 <?php } ?>
             </tbody>

@@ -47,7 +47,7 @@
           <h5 class="card-title">Usuários</h5>
           <p class="card-text">
             Administre os usuários que têm acesso ao sistema. 
-            Cadastre novos perfis, altere informações e controle permissões.
+            Cadastre novos perfis, visualize e altere informações.
           </p>
         </div>
       </div>

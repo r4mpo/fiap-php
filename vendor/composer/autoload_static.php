@@ -22,6 +22,7 @@ class ComposerStaticInit500cc584768ce76e56fe598750f1b8d6
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Src\\Controllers\\ClassesController' => __DIR__ . '/../..' . '/src/Controllers/ClassesController.php',
         'Src\\Controllers\\ErrorsController' => __DIR__ . '/../..' . '/src/Controllers/ErrorsController.php',
         'Src\\Controllers\\HomeController' => __DIR__ . '/../..' . '/src/Controllers/HomeController.php',
         'Src\\Controllers\\StudentsController' => __DIR__ . '/../..' . '/src/Controllers/StudentsController.php',
@@ -30,11 +31,14 @@ class ComposerStaticInit500cc584768ce76e56fe598750f1b8d6
         'Src\\Core\\Core' => __DIR__ . '/../..' . '/src/Core/Core.php',
         'Src\\Core\\Model' => __DIR__ . '/../..' . '/src/Core/Model.php',
         'Src\\Core\\Repository' => __DIR__ . '/../..' . '/src/Core/Repository.php',
+        'Src\\Models\\Classes' => __DIR__ . '/../..' . '/src/Models/Classes.php',
         'Src\\Models\\Students' => __DIR__ . '/../..' . '/src/Models/Students.php',
         'Src\\Models\\Users' => __DIR__ . '/../..' . '/src/Models/Users.php',
+        'Src\\Repositories\\ClassesRepository' => __DIR__ . '/../..' . '/src/Repositories/ClassesRepository.php',
         'Src\\Repositories\\StudentsRepository' => __DIR__ . '/../..' . '/src/Repositories/StudentsRepository.php',
         'Src\\Repositories\\UsersRepository' => __DIR__ . '/../..' . '/src/Repositories/UsersRepository.php',
         'Src\\Router\\Routes' => __DIR__ . '/../..' . '/src/Router/Routes.php',
+        'Src\\Services\\Classes\\ClassesService' => __DIR__ . '/../..' . '/src/Services/Classes/ClassesService.php',
         'Src\\Services\\Students\\StudentsService' => __DIR__ . '/../..' . '/src/Services/Students/StudentsService.php',
         'Src\\Services\\Users\\LoginService' => __DIR__ . '/../..' . '/src/Services/Users/LoginService.php',
         'Src\\Utils\\RenderView' => __DIR__ . '/../..' . '/src/Utils/RenderView.php',

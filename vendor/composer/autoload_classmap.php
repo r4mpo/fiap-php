@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'Src\\Controllers\\ClassesController' => $baseDir . '/src/Controllers/ClassesController.php',
     'Src\\Controllers\\ErrorsController' => $baseDir . '/src/Controllers/ErrorsController.php',
     'Src\\Controllers\\HomeController' => $baseDir . '/src/Controllers/HomeController.php',
     'Src\\Controllers\\StudentsController' => $baseDir . '/src/Controllers/StudentsController.php',
@@ -15,11 +16,14 @@ return array(
     'Src\\Core\\Core' => $baseDir . '/src/Core/Core.php',
     'Src\\Core\\Model' => $baseDir . '/src/Core/Model.php',
     'Src\\Core\\Repository' => $baseDir . '/src/Core/Repository.php',
+    'Src\\Models\\Classes' => $baseDir . '/src/Models/Classes.php',
     'Src\\Models\\Students' => $baseDir . '/src/Models/Students.php',
     'Src\\Models\\Users' => $baseDir . '/src/Models/Users.php',
+    'Src\\Repositories\\ClassesRepository' => $baseDir . '/src/Repositories/ClassesRepository.php',
     'Src\\Repositories\\StudentsRepository' => $baseDir . '/src/Repositories/StudentsRepository.php',
     'Src\\Repositories\\UsersRepository' => $baseDir . '/src/Repositories/UsersRepository.php',
     'Src\\Router\\Routes' => $baseDir . '/src/Router/Routes.php',
+    'Src\\Services\\Classes\\ClassesService' => $baseDir . '/src/Services/Classes/ClassesService.php',
     'Src\\Services\\Students\\StudentsService' => $baseDir . '/src/Services/Students/StudentsService.php',
     'Src\\Services\\Users\\LoginService' => $baseDir . '/src/Services/Users/LoginService.php',
     'Src\\Utils\\RenderView' => $baseDir . '/src/Utils/RenderView.php',
