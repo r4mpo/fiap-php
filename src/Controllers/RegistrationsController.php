@@ -1,0 +1,72 @@
+<?php
+
+namespace Src\Controllers;
+
+use Src\Core\Controller;
+use Src\Services\Registrations\RegistrationsService;
+
+class RegistrationsController extends Controller
+{
+    /**
+     * Serviço responsável pelas operações de negócio relacionadas às matrículas.
+     *
+     * @var RegistrationsService
+     */
+    private RegistrationsService $registrationsService;
+
+    /**
+     * Construtor da classe RegistrationsController.
+     *
+     * Inicializa a instância de `RegistrationsService`, permitindo que o controller
+     * utilize os métodos de negócio para gerenciar as matrículas.
+     */
+    public function __construct()
+    {
+        $this->registrationsService = new RegistrationsService();
+    }
+
+    /**
+     * Exibe a lista de turmas disponíveis no sistema.
+     *
+     * Processos realizados neste método:
+     * 1. Recupera todas as turmas através do serviço `RegistrationsService`.
+     * 2. Envia os dados obtidos para a view `registrations/index`.
+     *
+     * Dados enviados para a view:
+     * - **classes**: lista de turmas com `id` (codificado em base64) e `name`.
+     *
+     * @return void
+     */
+    public function index(): void
+    {
+        $classes = $this->registrationsService->getClasses();
+        $this->view('registrations/index', [
+            'classes' => $classes
+        ]);
+    }
+
+    /**
+     * Exibe a lista de alunos matriculados em uma turma específica.
+     *
+     * Processos realizados neste método:
+     * 1. Decodifica o identificador da turma recebido como parâmetro (`$params[0]`),
+     *    convertendo de Base64 URL-safe para o valor original.
+     * 2. Utiliza o serviço `RegistrationsService` para recuperar todos os alunos
+     *    associados à turma informada.
+     * 3. Renderiza a view `registrations/students`, enviando como parâmetro:
+     *    - **students**: lista de alunos matriculados na turma selecionada.
+     *
+     * @param array $params Array de parâmetros recebidos pela rota, onde
+     *                      o índice [0] representa o ID da turma (em Base64).
+     * @return void
+     */
+    public function search($params)
+    {
+        $classId = base64urlDecode($params[0]);
+        $students = $this->registrationsService->getStudents($classId);
+
+        $this->view('registrations/students', [
+            'students' => $students
+        ]);
+    }
+}

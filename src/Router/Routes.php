@@ -21,6 +21,8 @@ class Routes
             '/exeLogin' => 'UsersController@exeLogin',
             '/students' => 'StudentsController@index',
             '/classes' => 'ClassesController@index',
+            '/registrations' => 'RegistrationsController@index',
+            '/registrations/{params}' => 'RegistrationsController@search',
         ];
     }
 }

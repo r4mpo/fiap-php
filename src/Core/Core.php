@@ -27,7 +27,7 @@ class Core
         $url = ($url != '/') ? rtrim($url, '/') : $url;
 
         foreach ($routes as $path => $method) {
-            $pattern = '#^' . preg_replace('/{id}/', '(\w+)', $path) . '$#';
+            $pattern = '#^' . preg_replace('/{params}/', '([\w-]+|\d+)', $path) . '$#';
 
             if (preg_match($pattern, $url, $matches)) {
                 $routerFound = true;

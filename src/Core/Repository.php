@@ -87,7 +87,7 @@ class Repository
             $query .= count($params['JOIN']) == 1 ? ' ' : '';
             foreach ($params['JOIN'] as $value) {
                 $end = end($params['JOIN']) == $value;
-                $query .= ($end ? '' : ' ') . $value['TYPE'] . ' JOIN ' . $value['TABLE'] . ' ON ' . $value['CONDITIONS'];
+                $query .= ($end ? '' : ' ') . $value['TYPE'] . ' JOIN ' . $value['TABLE'] . ' ON ' . $value['CONDITIONS'] . ($end ? '' : ' ') ;
             }
         }
 

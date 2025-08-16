@@ -10,7 +10,7 @@
                     <th>#</th>
                     <th>Turma</th>
                     <th>Descrição</th>
-                    <th>Qtd de Alunos</th>
+                    <th>Quantidade de Alunos</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -27,10 +27,10 @@
                                 <button type="button" class="btn btn-outline-danger"><i class="ri-delete-bin-line"></i></button>
                             </td>
                         </tr>
-                    <?php } ?>
-                <?php } else { ?>
+                    <?php }
+                } else { ?>
                     <tr>
-                        <td colspan="6">Nenhum registro de <strong>turmas</strong> foi encontrado em nosso sistema.</td>
+                        <td colspan="5">Nenhum registro de <strong>turmas</strong> foi encontrado em nosso sistema.</td>
                     </tr>
                 <?php } ?>
             </tbody>

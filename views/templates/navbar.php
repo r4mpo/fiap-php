@@ -4,7 +4,7 @@
 
       <!-- Logo -->
       <div class="d-flex align-items-center">
-        <img src="public/images/logo-fiap.jpeg" 
+        <img src="<?php echo BASE_URL ?>/public/images/logo-fiap.jpeg" 
              alt="Logo" class="me-2 logo-img">
       </div>
 

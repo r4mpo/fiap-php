@@ -38,7 +38,6 @@ if (!function_exists('formatCpf')) {
     }
 }
 
-
 /**
  * Limita um texto para se adequar melhor na view
  *
@@ -53,7 +52,6 @@ if (!function_exists('limitText')) {
     }
 }
 
-
 // /////////////////////////////
 // FUNÇÕES DE VALIDAÇÃO
 // /////////////////////////////
@@ -64,8 +62,8 @@ if (!function_exists('limitText')) {
  * @param string $cpf CPF numérico ou formatado
  * @return bool Retorna true se válido, false caso contrário
  */
-if (!function_exists('validate_cpf')) {
-    function validate_cpf(string $cpf): bool
+if (!function_exists('validateCpf')) {
+    function validateCpf(string $cpf): bool
     {
         // Remove caracteres não numéricos
         $cpf = preg_replace('/\D/', '', $cpf);
@@ -93,5 +91,21 @@ if (!function_exists('validate_cpf')) {
         }
 
         return true;
+    }
+}
+
+if (!function_exists('base64urlDecode')) {
+    function base64urlDecode(string $data): string
+    {
+        // Converte os caracteres de volta ao padrão Base64
+        $base64 = strtr($data, '-_', '+/');
+
+        // Ajusta o padding (caso necessário)
+        $padding = strlen($base64) % 4;
+        if ($padding > 0) {
+            $base64 .= str_repeat('=', 4 - $padding);
+        }
+
+        return base64_decode($base64);
     }
 }

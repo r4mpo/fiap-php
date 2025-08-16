@@ -12,10 +12,10 @@
   <title>SISTEMA GESTÃO EDUCACIONAL</title>
   
   <!-- Favicon -->
-  <link rel="shortcut icon" href="public/images/logo-fiap.jpeg" type="image/x-icon">
+  <link rel="shortcut icon" href="<?php echo BASE_URL ?>/public/images/logo-fiap.jpeg" type="image/x-icon">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="public/style.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL ?>/public/style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css" rel="stylesheet">
@@ -29,7 +29,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- JS - scripts locais -->
-  <script src="public/js/loginForm.js"></script>
-  <script src="public/js/dataList.js"></script>
-  <script src="public/js/home.js"></script>
+  <script src="<?php echo BASE_URL ?>/public/js/forms.js"></script>
+  <script src="<?php echo BASE_URL ?>/public/js/dataList.js"></script>
+  <script src="<?php echo BASE_URL ?>/public/js/home.js"></script>
 </head>
