@@ -3,6 +3,7 @@
 namespace Src\Core;
 
 use Src\Controllers\ErrorsController;
+use Src\Controllers\UsersController;
 
 class Core
 {
@@ -31,6 +32,13 @@ class Core
 
             if (preg_match($pattern, $url, $matches)) {
                 $routerFound = true;
+
+                // Caso não esteja autenticado, é redirecionado ao form de login
+                if (!isset($_SESSION['authenticated']) && !in_array($url, ['/login', '/exeLogin'])) {
+                    header('Location: ' . BASE_URL . '/login');
+                    exit;
+                }
+
                 array_shift($matches);
                 [$controller, $action] = explode('@', $method);
 

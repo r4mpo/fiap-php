@@ -12,6 +12,11 @@ return array(
     'Src\\Controllers\\UsersController' => $baseDir . '/src/Controllers/UsersController.php',
     'Src\\Core\\Controller' => $baseDir . '/src/Core/Controller.php',
     'Src\\Core\\Core' => $baseDir . '/src/Core/Core.php',
+    'Src\\Core\\Model' => $baseDir . '/src/Core/Model.php',
+    'Src\\Core\\Repository' => $baseDir . '/src/Core/Repository.php',
+    'Src\\Models\\Users' => $baseDir . '/src/Models/Users.php',
+    'Src\\Repositories\\UsersRepository' => $baseDir . '/src/Repositories/UsersRepository.php',
     'Src\\Router\\Routes' => $baseDir . '/src/Router/Routes.php',
+    'Src\\Services\\Users\\LoginService' => $baseDir . '/src/Services/Users/LoginService.php',
     'Src\\Utils\\RenderView' => $baseDir . '/src/Utils/RenderView.php',
 );

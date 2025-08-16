@@ -27,7 +27,12 @@ class ComposerStaticInit500cc584768ce76e56fe598750f1b8d6
         'Src\\Controllers\\UsersController' => __DIR__ . '/../..' . '/src/Controllers/UsersController.php',
         'Src\\Core\\Controller' => __DIR__ . '/../..' . '/src/Core/Controller.php',
         'Src\\Core\\Core' => __DIR__ . '/../..' . '/src/Core/Core.php',
+        'Src\\Core\\Model' => __DIR__ . '/../..' . '/src/Core/Model.php',
+        'Src\\Core\\Repository' => __DIR__ . '/../..' . '/src/Core/Repository.php',
+        'Src\\Models\\Users' => __DIR__ . '/../..' . '/src/Models/Users.php',
+        'Src\\Repositories\\UsersRepository' => __DIR__ . '/../..' . '/src/Repositories/UsersRepository.php',
         'Src\\Router\\Routes' => __DIR__ . '/../..' . '/src/Router/Routes.php',
+        'Src\\Services\\Users\\LoginService' => __DIR__ . '/../..' . '/src/Services/Users/LoginService.php',
         'Src\\Utils\\RenderView' => __DIR__ . '/../..' . '/src/Utils/RenderView.php',
     );
 

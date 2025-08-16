@@ -1,25 +1,28 @@
 $(document).ready(function () {
-    $("#loginForm").on("submit", function (e) {
+
+    let baseUrl = $("meta[name='baseUrl']").attr("content");
+
+    $('#loginForm').on('submit', function (e) {
         e.preventDefault();
 
-        let email = $("#email").val().trim();
-        let password = $("#password").val().trim();
+        let email = $('#email').val().trim();
+        let password = $('#password').val().trim();
         let hasError = false;
 
         // Remove mensagens de erro anteriores
-        $(".is-invalid").removeClass("is-invalid");
-        $(".invalid-feedback").remove();
+        $('.is-invalid').removeClass('is-invalid');
+        $('.invalid-feedback').remove();
 
         // Validação simples de e-mail
-        if (email === "" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            $("#email").addClass("is-invalid")
+        if (email === '' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            $('#email').addClass('is-invalid')
                 .after('<div class="invalid-feedback">Informe um e-mail válido.</div>');
             hasError = true;
         }
 
         // Validação de senha
-        if (password === "") {
-            $("#password").addClass("is-invalid")
+        if (password === '') {
+            $('#password').addClass('is-invalid')
                 .after('<div class="invalid-feedback">Informe sua senha.</div>');
             hasError = true;
         }
@@ -29,24 +32,33 @@ $(document).ready(function () {
 
         // Envio via AJAX
         $.ajax({
-            url: $(this).attr("action"),
-            method: "POST",
+            url: $(this).attr('action'),
+            method: 'POST',
             data: {
                 email: email,
                 password: password
             },
-            dataType: "json",
+            dataType: 'json',
             success: function (response) {
-                if (response.cod == '111') {
-                    alert("Login realizado com sucesso!");
-                    window.location.href = response.redirect ?? "<?php echo BASE_URL ?>";
+                console.log(response)
+                if (response.code == '111') {
+                    message('Sucesso!', response.message, 'success');
+                    window.location.href = baseUrl + '/';
                 } else {
-                    alert(response.message ?? "Erro ao fazer login.");
+                    message('Oops!', response.message ?? 'Erro ao fazer login.', 'error');
                 }
             },
             error: function () {
-                alert("Ocorreu um erro na requisição. Tente novamente.");
+                message('Oops!', 'Ocorreu um erro na requisição. Tente novamente.', 'error');
             }
         });
     });
+
+    var message = function (title, text, icon) {
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: icon
+        });
+    };
 });
