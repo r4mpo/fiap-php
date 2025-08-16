@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/../templates/navbar.php'; ?>
 <div class="container mt-5" style="margin-bottom: 4%;">
-    <button type="button" class="btn btn-dark mb-2"><i class="ri-add-circle-line"></i> Cadastrar</button>
+    <a href="<?php echo BASE_URL ?>/createClasses"><button type="button" class="btn btn-dark mb-2"><i class="ri-add-circle-line"></i> Cadastrar</button></a>
     
     <!-- Container que permite scroll horizontal -->
     <div class="table-responsive">

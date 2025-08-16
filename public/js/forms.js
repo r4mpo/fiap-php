@@ -2,6 +2,69 @@ $(document).ready(function () {
 
     let baseUrl = $("meta[name='baseUrl']").attr("content");
 
+    $('#genericForm').on('submit', function (e) {
+        e.preventDefault();
+        let form = $(this);
+        let valid = true;
+
+        // Limpa feedback anterior
+        form.find('.invalid-feedback').text('');
+        form.find('.is-invalid').removeClass('is-invalid');
+
+        form.find('input, textarea').each(function () {
+            let input = $(this);
+            let feedback = input.siblings('.invalid-feedback');
+            let val = input.val().trim();
+
+            // Campo obrigatório
+            if (input.prop('required') && val === '') {
+                feedback.text('Campo obrigatório.');
+                input.addClass('is-invalid');
+                valid = false;
+                return true; // continue no each
+            }
+
+            // Validação minlength
+            let min = input.data('minlength');
+            if (min && val.length < parseInt(min)) {
+                feedback.text(`Mínimo ${min} caracteres.`);
+                input.addClass('is-invalid');
+                valid = false;
+                return true;
+            }
+
+            // Validação maxlength
+            let max = input.data('maxlength');
+            if (max && val.length > parseInt(max)) {
+                feedback.text(`Máximo ${max} caracteres.`);
+                input.addClass('is-invalid');
+                valid = false;
+            }
+        });
+
+        if (valid) {
+            $.ajax({
+                url: form.attr('action'),
+                method: 'POST',
+                data: form.serialize(),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code === '111'){
+                        message('Sucesso!', response.message ?? 'Operação realizada com sucesso.', 'success');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    } else {
+                        message('Oops!', response.message ?? 'Houve um erro ao realizar a operação.', 'error');
+                    }
+                },
+                error: function () {
+                    message('Oops!', 'Ocorreu um erro na requisição. Tente novamente.', 'error');
+                }
+            });
+        }
+    });
+
     $('#loginForm').on('submit', function (e) {
         e.preventDefault();
 
@@ -118,6 +181,8 @@ $(document).ready(function () {
             modal.hide();
         });
     });
+
+
 
 
     var modalDelete = function (id, message, deleteUrl) {

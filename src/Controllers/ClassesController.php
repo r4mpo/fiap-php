@@ -39,6 +39,42 @@ class ClassesController extends Controller
     }
 
     /**
+     * Exibe o formulário para criação de uma nova turma.
+     *
+     * Inicializa o formulário com campos vazios, já que se trata
+     * de um novo registro e não de edição.
+     *
+     * @return void
+     */
+    public function create(): void
+    {
+        $this->form('', '', '');
+    }
+
+    /**
+     * Carrega a view do formulário de turmas com os dados fornecidos.
+     *
+     * Esta função é genérica e pode ser utilizada tanto para criação
+     * quanto para edição de turmas. Recebe:
+     * - $id: ID da turma (vazio para novo registro)
+     * - $name: Nome da turma
+     * - $description: Descrição da turma
+     *
+     * @param string $id          ID da turma
+     * @param string $name        Nome da turma
+     * @param string $description Descrição da turma
+     * @return void
+     */
+    private function form($id, $name, $description): void
+    {
+        $this->view('classes/form', [
+            'id' => $id,
+            'name' => $name,
+            'description' => $description,
+        ]);
+    }
+
+    /**
      * Controlador para excluir uma turma específica.
      *
      * Esta função é responsável por:
