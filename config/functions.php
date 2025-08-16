@@ -94,6 +94,23 @@ if (!function_exists('validateCpf')) {
     }
 }
 
+/**
+ * Decodifica uma string Base64 que foi previamente convertida para um formato URL-safe.
+ *
+ * Processos realizados nesta função:
+ * 1. Converte os caracteres específicos de URL-safe ('-' e '_') de volta para os
+ *    caracteres padrão do Base64 ('+' e '/').
+ * 2. Ajusta o padding da string adicionando '=' ao final, caso o comprimento
+ *    não seja múltiplo de 4, garantindo que o Base64 seja válido.
+ * 3. Utiliza `base64_decode` para retornar o valor original da string.
+ *
+ * Exemplo:
+ * - Entrada: "MTIz" (Base64 URL-safe de "123")
+ * - Saída: "123"
+ *
+ * @param string $data String Base64 URL-safe a ser decodificada.
+ * @return string Valor original decodificado.
+ */
 if (!function_exists('base64urlDecode')) {
     function base64urlDecode(string $data): string
     {
@@ -107,5 +124,25 @@ if (!function_exists('base64urlDecode')) {
         }
 
         return base64_decode($base64);
+    }
+}
+
+/**
+ * Converte uma string Base64 para um formato seguro para URLs.
+ *
+ * @param string $str String codificada em Base64.
+ * @return string Base64 em formato URL-safe.
+ */
+if (!function_exists('base64urlEncode')) {
+    function base64urlEncode(string $str): string
+    {
+        // Converte a string para Base64
+        $base64 = base64_encode($str);
+
+        // Substitui caracteres para torná-la segura em URLs
+        $base64url = strtr($base64, '+/', '-_');
+
+        // Remove os sinais de padding "="
+        return rtrim($base64url, '=');
     }
 }

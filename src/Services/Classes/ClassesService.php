@@ -45,7 +45,7 @@ class ClassesService
         if (!empty($data)) {
             foreach ($data as $class) {
                 $classes[] = [
-                    'id' => base64_encode($class['id']),
+                    'id' => $class['id'],
                     'name' => $class['name'],
                     'description' => limitText($class['description'], 20),
                     'qttStudents' => $class['qttStudents'] ?? 0

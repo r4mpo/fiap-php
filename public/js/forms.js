@@ -74,16 +74,84 @@ $(document).ready(function () {
         // Se tiver erro, para aqui
         if (hasError) return;
 
-        let url = $(this).attr('action') + '/' + encodeUrl(class_id);
+        let url = $(this).attr('action') + '/' + class_id;
         window.location.href = url;
     });
 
-    var encodeUrl = function(str) {
-        // Ajusta para URL-safe
-        return str
-            .replace(/\+/g, '-') // substitui + por -
-            .replace(/\//g, '_') // substitui / por _
-            .replace(/=+$/, ''); // remove os sinais de =
+    $('.delete-data-open-modal').on('click', function () {
+        let dataId = $(this).data('id');
+        let dataName = $(this).data('name');
+        let deleteUrl = $(this).data('delete-url');
+        let dataMessage = `Você realmente deseja <strong>excluir a informação de ${dataName}</strong> do sistema? Esta ação não poderá ser desfeita.`
+
+        // Cria o modal dinamicamente
+        let modalHtml = modalDelete(dataId, dataMessage, deleteUrl);
+        console.log(modalDelete);
+        // Remove qualquer modal anterior
+        $('#modalContainer').html(modalHtml);
+
+        // Abre o modal usando Bootstrap 5
+        const modal = new bootstrap.Modal(document.getElementById(`deleteDataModal${dataId}`));
+        modal.show();
+
+        // Evento para o botão "Excluir"
+        $('.confirmDeleteData').on('click', function () {
+            const url = $(this).data('url');
+            $.ajax({
+                url: url,
+                method: 'DELETE',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.code === '111') {
+                        message('Sucesso!', response.message ?? 'Operação realizada com sucesso.', 'success');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    } else {
+                        message('Oops!', response.message ?? 'Houve um erro ao realizar a operação.', 'error');
+                    }
+                },
+                error: function () {
+                    message('Oops!', 'Ocorreu um erro na requisição. Tente novamente.', 'error');
+                }
+            });
+            modal.hide();
+        });
+    });
+
+
+    var modalDelete = function (id, message, deleteUrl) {
+        return `
+        <div class="modal fade" id="deleteDataModal${id}" tabindex="-1" aria-labelledby="deleteDataLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content border-danger">
+        
+                <div class="modal-header bg-danger text-white">
+                  <h5 class="modal-title" id="deleteDataLabel">
+                    <i class="ri-alert-line me-2"></i> Confirmação de Exclusão
+                  </h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+        
+                <div class="modal-body">
+                  <p class="mb-0">
+                    <i class="ri-information-line me-1"></i>
+                        ${message}
+                  </p>
+                </div>
+        
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="ri-close-line me-1"></i> Cancelar
+                  </button>
+                  <button type="button" class="btn btn-danger confirmDeleteData" data-url="${deleteUrl}">
+                    <i class="ri-delete-bin-6-line me-1"></i> Excluir
+                  </button>
+                </div>
+              </div>
+            </div>
+        </div>
+        `
     };
 
     var message = function (title, text, icon) {

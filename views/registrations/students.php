@@ -1,5 +1,5 @@
 <?php require_once __DIR__ . '/../templates/navbar.php'; ?>
-<div class="container mt-5">
+<div class="container mt-5" style="margin-bottom: 4%;">
     <a href="<?php echo BASE_URL ?>"><button type="button" class="btn btn-dark mb-2"><i class="ri-add-circle-line"></i> Cadastrar</button></a>
     <a href="<?php echo BASE_URL ?>/registrations"><button type="button" class="btn btn-primary mb-2"><i class="ri-corner-down-left-fill"></i> Retornar</button></a>
 
@@ -32,3 +32,4 @@
     </div>
 </div>
 <?php require_once __DIR__ . '/../templates/bottom-bar.php'; ?>
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

@@ -87,7 +87,7 @@ class Repository
             $query .= count($params['JOIN']) == 1 ? ' ' : '';
             foreach ($params['JOIN'] as $value) {
                 $end = end($params['JOIN']) == $value;
-                $query .= ($end ? '' : ' ') . $value['TYPE'] . ' JOIN ' . $value['TABLE'] . ' ON ' . $value['CONDITIONS'] . ($end ? '' : ' ') ;
+                $query .= ($end ? '' : ' ') . $value['TYPE'] . ' JOIN ' . $value['TABLE'] . ' ON ' . $value['CONDITIONS'] . ($end ? '' : ' ');
             }
         }
 
@@ -106,10 +106,83 @@ class Repository
         // Define se haverá alguma ordenação para a query
         $query .= !empty($params) && isset($params['ORDERBY']) ? (' ORDER BY ' . $params['ORDERBY']) : '';
 
-        // Executa a query diretamente
-        $stmt = $this->getConnection()->query($query);
+        // Executa query
+        return $this->select($query);
+    }
 
-        // Retorna os resultados como array associativo
+    /**
+     * Atualiza registros na tabela do modelo utilizando parâmetros genéricos.
+     *
+     * Esta função é responsável por construir e executar uma query UPDATE baseada
+     * nos arrays de parâmetros fornecidos:
+     * - 'SET'    => campos e valores que serão atualizados
+     * - 'FILTER' => condições para definir quais registros serão alterados (WHERE)
+     *
+     * Passos realizados:
+     * 1. Monta a cláusula SET com os campos e valores fornecidos.
+     * 2. Monta a cláusula WHERE com os filtros fornecidos.
+     * 3. Chama o método `insertOrUpdate()` para executar a query e retorna o número de linhas afetadas.
+     *
+     * Atenção: atualmente concatena valores diretamente na query (atenção com SQL Injection!).
+     *
+     * @param array $params Array com chaves 'SET' e 'FILTER'
+     * @return int Número de linhas afetadas pela atualização
+     */
+    protected function alter(array $params)
+    {
+        $query = 'UPDATE ' . $this->model->getTable();
+
+        // Monta os campos a serem atualizados
+        if (!empty($params) && isset($params['SET'])) {
+            $query .= ' SET ';
+            foreach ($params['SET'] as $field => $value) {
+                $end = end($params['SET']) == $value;
+                $query .= $field . (!empty($value) ? (' = ' . '"' . $value . '"') : '') . ($end ? '' : ', ');
+            }
+        }
+
+        // Monta filtros WHERE se existirem
+        if (!empty($params) && isset($params['FILTER'])) {
+            $query .= ' WHERE ';
+            foreach ($params['FILTER'] as $field => $value) {
+                $end = end($params['FILTER']) == $value;
+                $query .= $field . (!empty($value) ? (' = ' . '"' . $value . '"') : '') . ($end ? '' : ' AND ');
+            }
+        }
+
+        // Executa a query e retorna o número de linhas afetadas
+        return $this->insertOrUpdate($query);
+    }
+
+    /**
+     * Executa uma query SELECT e retorna os resultados como array associativo.
+     *
+     * Esta função é usada para consultas que retornam dados, como SELECT.
+     * Ela utiliza PDO para executar a query e `fetchAll(PDO::FETCH_ASSOC)` para
+     * retornar os resultados em formato de array associativo.
+     *
+     * @param string $query SQL SELECT a ser executada
+     * @return array Array associativo com os resultados da consulta
+     */
+    private function select($query): array
+    {
+        $stmt = $this->getConnection()->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?? [];
+    }
+
+    /**
+     * Executa uma query de INSERT ou UPDATE e retorna o número de linhas afetadas.
+     *
+     * Esta função é utilizada para operações que não retornam dados, mas modificam
+     * registros na tabela (INSERT, UPDATE ou DELETE).
+     * Retorna a quantidade de registros alterados, permitindo verificar o sucesso da operação.
+     *
+     * @param string $query SQL a ser executada (INSERT, UPDATE ou DELETE)
+     * @return int Número de linhas afetadas pela query
+     */
+    private function insertOrUpdate($query): int
+    {
+        $stmt = $this->getConnection()->query($query);
+        return $stmt->rowCount();
     }
 }

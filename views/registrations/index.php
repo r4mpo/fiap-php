@@ -7,7 +7,7 @@
         <option value="" selected disabled>Escolha uma turma...</option>
         <?php if (count($classes) > 0) {
             foreach ($classes as $class) { ?>
-                <option value="<?php echo $class['id'] ?>"><?php echo $class['name'] ?></option>
+                <option value="<?php echo base64urlEncode($class['id']) ?>"><?php echo $class['name'] ?></option>
             <?php }
         } ?>
       </select>
@@ -19,3 +19,4 @@
   </div>
 </form>
 <?php require_once __DIR__ . '/../templates/bottom-bar.php'; ?>
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

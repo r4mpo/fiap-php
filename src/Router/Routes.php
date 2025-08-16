@@ -16,11 +16,16 @@ class Routes
     {
         return [
             '/' => 'HomeController@index',
+            // Usuários
             '/login' => 'UsersController@login',
             '/logout' => 'UsersController@logout',
             '/exeLogin' => 'UsersController@exeLogin',
+            // Alunos
             '/students' => 'StudentsController@index',
+            '/deleteStudent/{params}' => 'StudentsController@delete',
+            // Turmas
             '/classes' => 'ClassesController@index',
+            // Matrículas
             '/registrations' => 'RegistrationsController@index',
             '/registrations/{params}' => 'RegistrationsController@search',
         ];

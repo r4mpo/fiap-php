@@ -1,5 +1,5 @@
 <?php require_once __DIR__ . '/../templates/navbar.php'; ?>
-<div class="container mt-5">
+<div class="container mt-5" style="margin-bottom: 4%;">
     <button type="button" class="btn btn-dark mb-2"><i class="ri-add-circle-line"></i> Cadastrar</button>
     
     <!-- Container que permite scroll horizontal -->
@@ -26,7 +26,11 @@
                             <td><?php echo $student['document'] ?></td>
                             <td>
                                 <button type="button" class="btn btn-outline-primary"><i class="ri-pencil-fill"></i></button>
-                                <button type="button" class="btn btn-outline-danger"><i class="ri-delete-bin-line"></i></button>
+                                <button type="button" class="btn btn-outline-danger delete-data-open-modal" 
+                                    data-id="<?php echo $student['id'] ?>"
+                                    data-name="<?php echo $student['name'] ?>"
+                                    data-delete-url="<?php echo BASE_URL ?>/deleteStudent/<?php echo base64urlEncode($student['id']) ?>"
+                                ><i class="ri-delete-bin-line"></i></button>
                             </td>
                         </tr>
                     <?php }
@@ -40,3 +44,4 @@
     </div>
 </div>
 <?php require_once __DIR__ . '/../templates/bottom-bar.php'; ?>
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

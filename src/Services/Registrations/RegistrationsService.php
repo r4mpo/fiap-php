@@ -43,7 +43,7 @@ class RegistrationsService
         if (!empty($data)) {
             foreach ($data as $registration) {
                 $registrations[] = [
-                    'id' => base64_encode($registration['id']),
+                    'id' => $registration['id'],
                     'name' => $registration['name'],
                 ];
             }
