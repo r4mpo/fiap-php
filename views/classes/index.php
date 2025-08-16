@@ -24,7 +24,11 @@
                             <td><?php echo $class['qttStudents'] ?></td>
                             <td>
                                 <button type="button" class="btn btn-outline-primary"><i class="ri-pencil-fill"></i></button>
-                                <button type="button" class="btn btn-outline-danger"><i class="ri-delete-bin-line"></i></button>
+                                <button type="button" class="btn btn-outline-danger delete-data-open-modal" 
+                                    data-id="<?php echo $class['id'] ?>"
+                                    data-name="<?php echo $class['name'] ?>"
+                                    data-delete-url="<?php echo BASE_URL ?>/deleteClasses/<?php echo base64urlEncode($class['id']) ?>"
+                                ><i class="ri-delete-bin-line"></i></button>
                             </td>
                         </tr>
                     <?php }

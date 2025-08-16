@@ -95,7 +95,7 @@ class Repository
         if (!empty($params) && isset($params['FILTER'])) {
             $query .= ' WHERE ';
             foreach ($params['FILTER'] as $field => $value) {
-                $end = end($params['FILTER']) == $value;
+                $end = array_key_last($params['FILTER']) == $field;
                 $query .= $field . (!empty($value) ? (' = ' . '"' . $value . '"') : '') . ($end ? '' : ' AND ');
             }
         }
@@ -145,7 +145,7 @@ class Repository
         if (!empty($params) && isset($params['FILTER'])) {
             $query .= ' WHERE ';
             foreach ($params['FILTER'] as $field => $value) {
-                $end = end($params['FILTER']) == $value;
+                $end = array_key_last($params['FILTER']) == $field;
                 $query .= $field . (!empty($value) ? (' = ' . '"' . $value . '"') : '') . ($end ? '' : ' AND ');
             }
         }

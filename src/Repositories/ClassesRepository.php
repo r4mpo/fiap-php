@@ -54,4 +54,30 @@ class ClassesRepository extends Repository
         // Chama o método consult() do Repository para executar a query
         return $this->consult($params);
     }
+
+        /**
+     * Realiza uma exclusão lógica (soft delete) de um registro de turma.
+     *
+     * Esta função não remove fisicamente o registro do banco de dados, mas
+     * atualiza o campo `deleted_at` com a data e hora atual, indicando que o
+     * registro foi "excluído".
+     *
+     * Passos realizados nesta função:
+     * 1. Cria um array `$params` que define os parâmetros para o método `alter`:
+     *    - `FILTER` => define qual registro será alterado, usando o ID da turma.
+     *    - `SET`    => define os campos que serão atualizados; neste caso, apenas `deleted_at`.
+     * 2. Chama o método `alter($params)` do repositório, que executa o UPDATE no banco.
+     * 3. Retorna o resultado da operação, normalmente o número de linhas afetadas.
+     *
+     * @param string $classesId ID do turma a ser excluído logicamente
+     * @return int Número de linhas afetadas pela operação (0 se nenhum registro foi alterado)
+     */
+    public function softDelete(string $classesId): int
+    {
+        $params = [];
+        $params['FILTER']['id'] = $classesId;
+        $params['SET']['deleted_at'] = date('Y-m-d H:i:s');
+
+        return $this->alter($params);
+    }
 }

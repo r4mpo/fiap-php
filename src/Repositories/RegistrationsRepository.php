@@ -24,11 +24,11 @@ class RegistrationsRepository extends Repository
      *
      * Processos realizados neste método:
      * 1. Define os parâmetros da consulta ao banco de dados:
-     *    - **FILTER**: retorna apenas registros onde `classes_students_tbl.deleted_at IS NULL`
-     *      (ou seja, exclui turmas/alunos removidos).
+     *    - **FILTER**: retorna apenas registros onde `classes_students_tbl.deleted_at IS NULL` e 
+     *      classes_tbl.deleted_at IS NULL (ou seja, exclui turmas/alunos removidos).
      *    - **FIELDS**: seleciona os campos `classes_tbl.id` e `classes_tbl.name`.
      *    - **JOIN**: realiza um `LEFT JOIN` com a tabela `classes_tbl`,
-     *      relacionando as turmas com seus alunos e filtrando registros não deletados.
+     *      relacionando as turmas com seus alunos.
      *    - **GROUPBY**: agrupa os resultados por `classes_tbl.id`,
      *      garantindo consistência em agregações.
      *    - **ORDERBY**: ordena os resultados alfabeticamente pelo campo `name`.
@@ -42,6 +42,7 @@ class RegistrationsRepository extends Repository
     {
         $params = [];
         $params['FILTER']['classes_students_tbl.deleted_at IS NULL'] = null;
+        $params['FILTER']['classes_tbl.deleted_at IS NULL'] = null;
         $params['FIELDS'] = 'classes_tbl.id, classes_tbl.name';
         $params['GROUPBY'] = 'classes_tbl.id';
         $params['ORDERBY'] = 'classes_tbl.name ASC';
@@ -49,7 +50,7 @@ class RegistrationsRepository extends Repository
         $params['JOIN'][] = [
             'TYPE' => 'LEFT',
             'TABLE' => 'classes_tbl',
-            'CONDITIONS' => 'classes_tbl.id = classes_students_tbl.class_id AND classes_tbl.deleted_at IS NULL'
+            'CONDITIONS' => 'classes_tbl.id = classes_students_tbl.class_id'
         ];
 
         // Executa a consulta no banco de dados com os parâmetros definidos

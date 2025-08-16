@@ -58,10 +58,10 @@ class StudentsRepository extends Repository
      * 2. Chama o método `alter($params)` do repositório, que executa o UPDATE no banco.
      * 3. Retorna o resultado da operação, normalmente o número de linhas afetadas.
      *
-     * @param int|string $studentId ID do aluno a ser excluído logicamente
+     * @param string $studentId ID do aluno a ser excluído logicamente
      * @return int Número de linhas afetadas pela operação (0 se nenhum registro foi alterado)
      */
-    public function softDelete($studentId)
+    public function softDelete(string $studentId): int
     {
         $params = [];
         $params['FILTER']['id'] = $studentId;

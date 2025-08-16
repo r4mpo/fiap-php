@@ -25,6 +25,7 @@ class Routes
             '/deleteStudent/{params}' => 'StudentsController@delete',
             // Turmas
             '/classes' => 'ClassesController@index',
+            '/deleteClasses/{params}' => 'ClassesController@delete',
             // Matrículas
             '/registrations' => 'RegistrationsController@index',
             '/registrations/{params}' => 'RegistrationsController@search',

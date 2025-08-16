@@ -55,4 +55,37 @@ class ClassesService
 
         return $classes;
     }
+
+        /**
+     * Realiza a exclusão de uma turma utilizando exclusão lógica (soft delete).
+     *
+     * Esta função é responsável por:
+     * 1. Inicializar um array de resultado com um código de erro padrão (`333`) e uma mensagem genérica de falha.
+     * 2. Chamar o repositório de turmas (`classesRepository`) para executar a exclusão lógica do registro informado pelo ID.
+     *    - A exclusão lógica normalmente atualiza o campo `deleted_at` com a data/hora atual, sem remover fisicamente o registro.
+     * 3. Verificar se alguma linha foi afetada pela operação (`$rowAffected > 0`):
+     *    - Caso positivo, atualiza o array de resultado com código de sucesso (`111`) e mensagem de confirmação.
+     * 4. Retornar o array `$result` contendo:
+     *    - `code`    => código do resultado da operação ('111' = sucesso, '333' = erro)
+     *    - `message` => mensagem explicativa do resultado
+     *
+     * @param string $studentId ID do turma a ser excluído
+     * @return array Array contendo `code` e `message` indicando o resultado da operação
+     */
+    public function delete(string $studentId): array
+    {
+        $result = [];
+        $result['code'] = '333';
+        $result['message'] = 'Houve um erro ao excluir a informação solicitada.';
+
+        $rowAffected = $this->classesRepository->softDelete($studentId);
+
+        if ($rowAffected > 0) {
+            $result['code'] = '111';
+            $result['message'] = 'Informações excluídas com sucesso.';
+        }
+
+        return $result;
+    }
+
 }

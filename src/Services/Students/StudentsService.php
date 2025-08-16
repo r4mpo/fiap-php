@@ -71,10 +71,10 @@ class StudentsService
      *    - `code`    => código do resultado da operação ('111' = sucesso, '333' = erro)
      *    - `message` => mensagem explicativa do resultado
      *
-     * @param int|string $studentId ID do aluno a ser excluído
+     * @param string $studentId ID do aluno a ser excluído
      * @return array Array contendo `code` e `message` indicando o resultado da operação
      */
-    public function delete($studentId): array
+    public function delete(string $studentId): array
     {
         $result = [];
         $result['code'] = '333';
