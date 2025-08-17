@@ -13,6 +13,13 @@ namespace Src\DTOs;
 class ClassesDTO
 {
     /**
+     * Id da turma.
+     *
+     * @var string|null
+     */
+    private $id;
+
+    /**
      * Nome da turma.
      *
      * @var string|null
@@ -34,8 +41,9 @@ class ClassesDTO
      *
      * @param array $params Array associativo contendo 'name' e 'description'.
      */
-    public function __construct($params)
+    public function __construct(array $params)
     {
+        $this->id = isset($params['id']) ? sanitizeString($params['id']) : null;
         $this->name = isset($params['name']) ? sanitizeString($params['name']) : null;
         $this->description = isset($params['description']) ? sanitizeString($params['description']) : null;
     }
@@ -44,10 +52,11 @@ class ClassesDTO
      * Valida os campos de uma turma e retorna os dados validados.
      *
      * Esta função realiza as seguintes validações:
-     * 1. Verifica se o nome da turma está presente.
-     * 2. Verifica se a descrição da turma está presente.
-     * 3. Verifica se o tamanho do nome está entre 3 e 20 caracteres.
-     * 4. Verifica se o tamanho da descrição está entre 3 e 100 caracteres.
+     * 1. Verifica se o id da turma está presente.
+     * 2. Verifica se o nome da turma está presente.
+     * 3. Verifica se a descrição da turma está presente.
+     * 4. Verifica se o tamanho do nome está entre 3 e 20 caracteres.
+     * 5. Verifica se o tamanho da descrição está entre 3 e 100 caracteres.
      *
      * Retorna um array contendo:
      * - 'invalid' => boolean indicando se ocorreu algum erro de validação.
@@ -104,6 +113,7 @@ class ClassesDTO
             return $data;
         }
 
+        $data['id'] = $this->id;
         $data['name'] = $this->name;
         $data['description'] = $this->description;
         return $data;

@@ -88,4 +88,39 @@ class ClassesRepository extends Repository
 
         return $this->alter($params);
     }
+
+    /**
+     * Insere ou atualiza um registro na tabela de classes de acordo com os dados fornecidos.
+     *
+     * Fluxo de execução:
+     * 1. Monta o array $params['SET'] contendo os campos que sempre serão
+     *    atualizados/armazenados:
+     *    - 'name'        → nome da classe.
+     *    - 'description' → descrição da classe.
+     *    - 'updated_at'  → timestamp da última atualização (definido automaticamente).
+     *
+     * 2. Verifica se o campo 'id' foi informado em $fields:
+     *    - Caso SIM: considera que já existe um registro a ser alterado,
+     *      adiciona $params['FILTER']['id'] e executa o método `alter()`,
+     *      retornando o número de linhas afetadas.
+     *    - Caso NÃO: considera que é um novo registro, chama o método `insert()`
+     *      com os dados preparados e retorna o número de linhas inseridas.
+     *
+     * @param array $fields Dados da classe (ex.: id, name, description).
+     * @return int Quantidade de linhas afetadas (1 em caso de sucesso, 0 se nada foi alterado/inserido).
+     */
+    public function register(array $fields): int
+    {
+        $params = [];
+        $params['SET']['name'] = $fields['name'];
+        $params['SET']['description'] = $fields['description'];
+        $params['SET']['updated_at'] = date('Y-m-d H:i:s');
+
+        if (!empty($fields['id'])) {
+            $params['FILTER']['id'] = $fields['id'];
+            return $this->alter($params);
+        }
+
+        return $this->insert($params);
+    }
 }

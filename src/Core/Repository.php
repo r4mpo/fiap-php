@@ -121,7 +121,7 @@ class Repository
      * Passos realizados:
      * 1. Monta a cláusula SET com os campos e valores fornecidos.
      * 2. Monta a cláusula WHERE com os filtros fornecidos.
-     * 3. Chama o método `insertOrUpdate()` para executar a query e retorna o número de linhas afetadas.
+     * 3. Chama o método `insertOrAlter()` para executar a query e retorna o número de linhas afetadas.
      *
      * Atenção: atualmente concatena valores diretamente na query (atenção com SQL Injection!).
      *
@@ -151,8 +151,63 @@ class Repository
         }
 
         // Executa a query e retorna o número de linhas afetadas
-        return $this->insertOrUpdate($query);
+        return $this->insertOrAlter($query);
     }
+
+    /**
+     * Monta e executa dinamicamente uma query de inserção (INSERT) na tabela definida pelo model.
+     *
+     * Funcionamento:
+     * 1. Define a query base no formato: INSERT INTO {nome_tabela}.
+     * 2. Caso existam dados em $params['SET']:
+     *    - Extrai as chaves do array como nomes das colunas.
+     *    - Monta a lista de valores, escapando cada valor com `addslashes()` e colocando entre aspas simples.
+     *    - Concatena colunas e valores ao comando SQL.
+     *
+     * 3. Caso existam filtros em $params['FILTER']:
+     *    - Adiciona uma cláusula WHERE (apesar de incomum em um INSERT),
+     *      permitindo inserir condicionado a algum critério adicional.
+     *    - Monta cada condição no formato `{coluna} = "valor"` unidas por AND.
+     *
+     * 4. Por fim, executa a query completa através do método `insertOrAlter()`
+     *    e retorna a quantidade de linhas afetadas no banco.
+     *
+     * @param array $params Estrutura de dados contendo:
+     *   - 'SET'    => [coluna => valor]  (campos a inserir).
+     *   - 'FILTER' => [coluna => valor]  (condições opcionais).
+     * @return int Número de linhas afetadas pela operação.
+     */
+    protected function insert(array $params)
+    {
+        $query = 'INSERT INTO ' . $this->model->getTable();
+
+        // Monta os campos a serem cadastrados
+        if (!empty($params) && isset($params['SET'])) {
+            // Colunas
+            $columns = array_keys($params['SET']);
+            $query .= '(' . implode(',', $columns) . ')';
+
+            // Valores (cada valor entre aspas simples e escapado)
+            $values = array_map(function ($value) {
+                return "'" . addslashes($value) . "'";
+            }, $params['SET']);
+
+            $query .= ' VALUES (' . implode(',', $values) . ')';
+        }
+
+        // Monta filtros WHERE se existirem
+        if (!empty($params) && isset($params['FILTER'])) {
+            $query .= ' WHERE ';
+            foreach ($params['FILTER'] as $field => $value) {
+                $end = array_key_last($params['FILTER']) == $field;
+                $query .= $field . (!empty($value) ? (' = ' . '"' . $value . '"') : '') . ($end ? '' : ' AND ');
+            }
+        }
+
+        // Executa a query e retorna o número de linhas afetadas
+        return $this->insertOrAlter($query);
+    }
+
 
     /**
      * Executa uma query SELECT e retorna os resultados como array associativo.
@@ -180,7 +235,7 @@ class Repository
      * @param string $query SQL a ser executada (INSERT, UPDATE ou DELETE)
      * @return int Número de linhas afetadas pela query
      */
-    private function insertOrUpdate($query): int
+    private function insertOrAlter($query): int
     {
         $stmt = $this->getConnection()->query($query);
         return $stmt->rowCount();
