@@ -57,6 +57,40 @@ Senha: Teste#123
 
 ---
 
+## 🧪 Testes Unitários
+
+Este projeto inclui **testes unitários** para a camada de serviços (ex: `StudentsService`).
+
+Para rodar os testes:
+
+1. Certifique-se de preencher corretamente as **constantes de configuração** no arquivo:
+
+   ```
+   test/StudentsServiceTest.php
+   ```
+
+   * `BASE_URL`
+   * `DB_HOST`
+   * `DB_USER`
+   * `DB_PASS`
+   * `DB_NAME`
+
+2. Execute os testes com o PHPUnit:
+
+```bash
+./vendor/bin/phpunit ./test/
+```
+
+3. Você deverá ver algo como:
+
+```
+OK (6 tests, 6 assertions)
+```
+
+> ⚠️ É importante preencher as constantes corretamente para que os testes de conexão e criação de registros funcionem.
+
+---
+
 ## 📂 Estrutura do Projeto
 ```
 fiap-php/

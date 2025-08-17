@@ -15,15 +15,19 @@ class StudentsServiceTest extends TestCase
         parent::__construct();
 
         if (!defined('BASE_URL'))
-            define('BASE_URL', 'http://localhost/fiap-php');
+            define('BASE_URL', '');
+        
         if (!defined('DB_HOST'))
-            define('DB_HOST', 'localhost');
+            define('DB_HOST', '');
+
         if (!defined('DB_USER'))
-            define('DB_USER', 'root');
+            define('DB_USER', '');
+
         if (!defined('DB_PASS'))
             define('DB_PASS', '');
+
         if (!defined('DB_NAME'))
-            define('DB_NAME', 'fiap_php_db');
+            define('DB_NAME', '');
     }
 
     public function testCreateStudentSucess()
