@@ -62,7 +62,7 @@ Senha: Teste#123
 fiap-php/
 │── config/            # Arquivos de configuração (ex: database.php)
 │── database/          # Dump da base de dados
-│── public/            # Pasta pública do servidor (index.php)
+│── public/            # Pasta pública do servidor (js, css, imagens)
 │── src/               # Código fonte (controllers, models, services)
 │── vendor/            # Dependências do Composer
 │── README.md          # Este arquivo
