@@ -16,6 +16,11 @@ class Routes
     {
         return [
             '/' => 'HomeController@index',
+            // Usuários
+            '/users' => 'UsersController@index',
+            '/dataUsers' => 'UsersController@formData',
+            '/editUsers/{params}' => 'UsersController@formEdit',
+            '/exeDataUsers' => 'UsersController@exeData',
             // Auth
             '/login' => 'UsersController@login',
             '/logout' => 'UsersController@logout',

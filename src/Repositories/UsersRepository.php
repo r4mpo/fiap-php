@@ -37,4 +37,32 @@ class UsersRepository extends Repository
         // Chama o método consult() do Repository para executar a query
         return $this->consult($params);
     }
+
+    public function getUsers($id = null): array
+    {
+        $params = [];
+        $params['FILTER']['deleted_at IS NULL'] = NULL;
+
+        if ($id !== null) {
+            $params['FILTER']['id'] = $id;
+        }
+
+        return $this->consult($params);
+    }
+
+    public function register(array $fields): int
+    {
+        $params = [];
+        $params['SET']['name'] = $fields['name'];
+        $params['SET']['email'] = $fields['email'];
+        $params['SET']['password'] = $fields['password'];
+        $params['SET']['updated_at'] = date('Y-m-d H:i:s');
+
+        if (!empty($fields['id'])) {
+            $params['FILTER']['id'] = $fields['id'];
+            return $this->alter($params);
+        }
+
+        return $this->insert($params);
+    }
 }

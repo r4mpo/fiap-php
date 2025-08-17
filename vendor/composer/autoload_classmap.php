@@ -34,5 +34,6 @@ return array(
     'Src\\Services\\Reports\\ReportsService' => $baseDir . '/src/Services/Reports/ReportsService.php',
     'Src\\Services\\Students\\StudentsService' => $baseDir . '/src/Services/Students/StudentsService.php',
     'Src\\Services\\Users\\LoginService' => $baseDir . '/src/Services/Users/LoginService.php',
+    'Src\\Services\\Users\\UsersService' => $baseDir . '/src/Services/Users/UsersService.php',
     'Src\\Utils\\RenderView' => $baseDir . '/src/Utils/RenderView.php',
 );

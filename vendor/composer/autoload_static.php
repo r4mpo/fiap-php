@@ -49,6 +49,7 @@ class ComposerStaticInit500cc584768ce76e56fe598750f1b8d6
         'Src\\Services\\Reports\\ReportsService' => __DIR__ . '/../..' . '/src/Services/Reports/ReportsService.php',
         'Src\\Services\\Students\\StudentsService' => __DIR__ . '/../..' . '/src/Services/Students/StudentsService.php',
         'Src\\Services\\Users\\LoginService' => __DIR__ . '/../..' . '/src/Services/Users/LoginService.php',
+        'Src\\Services\\Users\\UsersService' => __DIR__ . '/../..' . '/src/Services/Users/UsersService.php',
         'Src\\Utils\\RenderView' => __DIR__ . '/../..' . '/src/Utils/RenderView.php',
     );
 

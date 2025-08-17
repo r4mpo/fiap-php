@@ -67,6 +67,7 @@ class Repository
      * - 'FILTER'  => array de filtros no formato ['campo' => 'valor']
      * - ORDERBY   => string contendo o valor de ordenação ['ex.: id DESC ']
      * - GROUPBY   => string contendo preferência de agrupamento ['ex.: model.id']
+     * - LIMIT     => string contendo a limitação de registros ['ex.: 10']
      *
      * Observações:
      * - Se FILTER estiver vazio, retorna todos os registros.
