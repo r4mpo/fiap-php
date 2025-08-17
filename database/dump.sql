@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17/08/2025 às 04:27
+-- Tempo de geração: 17/08/2025 às 10:07
 -- Versão do servidor: 10.4.27-MariaDB
 -- Versão do PHP: 7.4.33
 
@@ -189,7 +189,10 @@ INSERT INTO `classes_students_tbl` (`id`, `class_id`, `student_id`, `updated_at`
 (147, 7, 49, '2025-08-16 14:42:01', NULL),
 (148, 8, 50, '2025-08-16 14:42:01', NULL),
 (149, 12, 50, '2025-08-16 14:42:01', NULL),
-(150, 1, 50, '2025-08-16 14:42:01', NULL);
+(150, 1, 50, '2025-08-16 14:42:01', NULL),
+(153, 2, 24, '2025-08-17 09:32:04', NULL),
+(154, 2, 49, '2025-08-17 09:32:22', NULL),
+(155, 2, 25, '2025-08-17 09:33:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -210,7 +213,7 @@ CREATE TABLE `classes_tbl` (
 --
 
 INSERT INTO `classes_tbl` (`id`, `name`, `description`, `updated_at`, `deleted_at`) VALUES
-(1, 'Turma A1', 'Turma inicial de alunos do curso de PHP.', '2025-08-16 14:22:47', NULL),
+(1, 'Turma A1', 'Turma inicial de alunos do curso de PHP.', '2025-08-17 05:00:40', NULL),
 (2, 'Turma B2', 'Turma intermediária de desenvolvimento web.', '2025-08-16 14:22:47', NULL),
 (3, 'Turma C3', 'Turma avançada com foco em Laravel e Vue.js.', '2025-08-16 14:22:47', NULL),
 (4, 'Turma D4', 'Turma de práticas de banco de dados e SQL.', '2025-08-16 14:22:47', NULL),
@@ -248,7 +251,7 @@ CREATE TABLE `students_tbl` (
 --
 
 INSERT INTO `students_tbl` (`id`, `name`, `date_of_birth`, `document`, `email`, `password`, `updated_at`, `deleted_at`) VALUES
-(1, 'Ana Silva', '2000-05-12', '39053344705', 'ana.silva1@email.com', '$2y$10$hashAna1...', '2025-08-16 12:17:54', NULL),
+(1, 'Ana Silva', '1999-05-12', '35606151006', 'ana.silva1@email.com', '$2y$10$QzvKxoz/aAPmk.GcovO50O8rygh.H1T/n/Bpsg/WUu1', '2025-08-17 07:52:51', NULL),
 (2, 'Bruno Souza', '1999-03-22', '62648716002', 'bruno.souza2@email.com', '$2y$10$hashBru2...', '2025-08-16 12:17:54', NULL),
 (3, 'Carla Oliveira', '2001-07-18', '39053344715', 'carla.oliveira3@email.com', '$2y$10$hashCar3...', '2025-08-16 12:17:54', NULL),
 (4, 'Diego Santos', '1998-11-05', '62648716030', 'diego.santos4@email.com', '$2y$10$hashDie4...', '2025-08-16 12:17:54', NULL),
@@ -271,7 +274,7 @@ INSERT INTO `students_tbl` (`id`, `name`, `date_of_birth`, `document`, `email`, 
 (21, 'Wesley Duarte', '1998-02-28', '39053344802', 'wesley.duarte21@email.com', '$2y$10$hashWes21...', '2025-08-16 12:17:54', NULL),
 (22, 'Yasmin Rocha', '2000-10-23', '62648716124', 'yasmin.rocha22@email.com', '$2y$10$hashYas22...', '2025-08-16 12:17:54', NULL),
 (23, 'Zeca Carvalho', '1999-09-09', '39053344815', 'zeca.carvalho23@email.com', '$2y$10$hashZec23...', '2025-08-16 12:17:54', NULL),
-(24, 'Alice Prado', '2001-03-17', '62648716132', 'alice.prado24@email.com', '$2y$10$hashAli24...', '2025-08-16 12:17:54', NULL),
+(24, 'Alice Prado', '2001-03-17', '54497940020', 'alice.prado24@email.com', '$2y$10$n.swBAvBfW/FheRIYgz/yeOUxyY0P48yJKFWxN1eZAO', '2025-08-17 09:57:59', NULL),
 (25, 'Bernardo Lopes', '1998-12-25', '39053344823', 'bernardo.lopes25@email.com', '$2y$10$hashBer25...', '2025-08-16 12:17:54', NULL),
 (26, 'Camila Duarte', '2002-01-09', '62648716141', 'camila.duarte26@email.com', '$2y$10$hashCam26...', '2025-08-16 12:17:54', NULL),
 (27, 'Daniel Ribeiro', '1997-06-16', '39053344830', 'daniel.ribeiro27@email.com', '$2y$10$hashDan27...', '2025-08-16 12:17:54', NULL),
@@ -296,7 +299,7 @@ INSERT INTO `students_tbl` (`id`, `name`, `date_of_birth`, `document`, `email`, 
 (46, 'Xavier Prado', '1999-02-20', '62648716248', 'xavier.prado46@email.com', '$2y$10$hashXav46...', '2025-08-16 12:17:54', NULL),
 (47, 'Yuri Matos', '2002-06-16', '39053344933', 'yuri.matos47@email.com', '$2y$10$hashYur47...', '2025-08-16 12:17:54', NULL),
 (48, 'Zilda Fernandes', '1997-09-09', '62648716256', 'zilda.fernandes48@email.com', '$2y$10$hashZil48...', '2025-08-16 12:17:54', NULL),
-(49, 'Arthur Nogueira', '2001-11-14', '39053344941', 'arthur.nogueira49@email.com', '$2y$10$hashArt49...', '2025-08-16 12:17:54', '2025-08-17 00:27:52'),
+(49, 'Arthur Nogueira', '2001-11-14', '39053344941', 'arthur.nogueira49@email.com', '$2y$10$hashArt49...', '2025-08-16 12:17:54', NULL),
 (50, 'Bianca Rezende', '1998-03-08', '62648716264', 'bianca.rezende50@email.com', '$2y$10$hashBia50...', '2025-08-16 12:17:54', NULL);
 
 -- --------------------------------------------------------
@@ -343,9 +346,7 @@ ALTER TABLE `classes_tbl`
 -- Índices de tabela `students_tbl`
 --
 ALTER TABLE `students_tbl`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `document` (`document`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `users_tbl`
@@ -362,7 +363,7 @@ ALTER TABLE `users_tbl`
 -- AUTO_INCREMENT de tabela `classes_students_tbl`
 --
 ALTER TABLE `classes_students_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT de tabela `classes_tbl`
@@ -374,7 +375,7 @@ ALTER TABLE `classes_tbl`
 -- AUTO_INCREMENT de tabela `students_tbl`
 --
 ALTER TABLE `students_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT de tabela `users_tbl`
