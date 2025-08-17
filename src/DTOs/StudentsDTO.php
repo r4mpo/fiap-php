@@ -55,17 +55,43 @@ class StudentsDTO
     private $password;
 
     /**
-     * Construtor da classe.
+     * Construtor da classe DTO de Aluno.
      *
-     * Recebe um array de parâmetros e sanitiza os valores de 'id', 'name', 'date_of_birth', 'document', 'email' e 'password'
-     * usando a função `sanitizeString` para evitar HTML e caracteres perigosos.
+     * Esta função inicializa as propriedades do objeto a partir de um array de parâmetros
+     * fornecido, aplicando sanitizações específicas em cada campo para garantir segurança
+     * e consistência dos dados.
      *
-     * @param array $params Array associativo contendo 'id', 'name' e 'description'.
+     * Processos realizados para cada campo:
+     * - `id`:
+     *   - Decodifica o valor do ID caso esteja presente, usando `base64urlDecode`.
+     *   - Caso não exista, define como `null`.
+     *
+     * - `name`:
+     *   - Sanitiza a string para conter apenas letras e espaços, usando `sanitizeLettersAndSpaces`.
+     *   - Caso não exista, define como `null`.
+     *
+     * - `date_of_birth`:
+     *   - Sanitiza a data como string segura, removendo HTML ou caracteres indesejados com `sanitizeString`.
+     *   - Caso não exista, define como `null`.
+     *
+     * - `document` (CPF ou documento similar):
+     *   - Remove tudo que não seja números, usando `sanitizeNumbers`.
+     *   - Caso não exista, define como `null`.
+     *
+     * - `email`:
+     *   - Sanitiza a string do e-mail para uso seguro com `sanitizeString`.
+     *   - Caso não exista, define como `null`.
+     *
+     * - `password`:
+     *   - Sanitiza a senha como string segura, removendo caracteres indesejados com `sanitizeString`.
+     *   - Caso não exista, define como `null`.
+     *
+     * @param array $params Array associativo contendo os dados do aluno.
      */
     public function __construct(array $params)
     {
         $this->id = isset($params['id']) ? base64urlDecode($params['id']) : null;
-        $this->name = isset($params['name']) ? sanitizeString($params['name']) : null;
+        $this->name = isset($params['name']) ? sanitizeLettersAndSpaces($params['name']) : null;
         $this->date_of_birth = isset($params['date_of_birth']) ? sanitizeString($params['date_of_birth']) : null;
         $this->document = isset($params['document']) ? sanitizeNumbers($params['document']) : null;
         $this->email = isset($params['email']) ? sanitizeString($params['email']) : null;

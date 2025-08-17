@@ -120,10 +120,10 @@ class StudentsService
         $dto = new StudentsDTO($params);
         $validate = $dto->validate();
 
-        var_dump($validate);exit;
         if ($validate['invalid']) {
             return $validate;
         }
+                var_dump($validate);exit;
 
         $rowAffected = $this->studentsRepository->register($validate);
 

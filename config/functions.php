@@ -9,10 +9,6 @@
  * - Adicione novas funções gerais conforme necessário, mantendo comentários claros.
  */
 
-// /////////////////////////////
-// FUNÇÕES DE FORMATAÇÃO
-// /////////////////////////////
-
 /**
  * Formata um CPF no padrão XXX.XXX.XXX-XX
  *
@@ -51,10 +47,6 @@ if (!function_exists('limitText')) {
         return strlen($string) > $qttCaracteres ? (substr($string, 0, $qttCaracteres) . '...') : '';
     }
 }
-
-// /////////////////////////////
-// FUNÇÕES DE VALIDAÇÃO
-// /////////////////////////////
 
 /**
  * Valida se um CPF é válido de acordo com os dígitos verificadores
@@ -261,5 +253,31 @@ if (!function_exists('validateStrongPassword')) {
         $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/';
 
         return preg_match($pattern, $password) === 1;
+    }
+}
+
+/**
+ * Sanitiza uma string removendo todos os caracteres que não sejam letras ou espaços.
+ *
+ * Esta função é útil para campos de nome ou texto que devem conter apenas letras
+ * e espaços, removendo números, símbolos e qualquer outro caractere especial.
+ *
+ * Processos realizados:
+ * 1. `preg_replace('/[^a-zA-ZÀ-ÿ\s]/u', '', $str)`:
+ *    - Remove tudo que não seja:
+ *      - Letras maiúsculas e minúsculas do alfabeto inglês (a-z, A-Z)
+ *      - Letras acentuadas (À-ÿ)
+ *      - Espaços em branco (\s)
+ *    - O modificador `u` garante suporte a UTF-8 para acentuação correta.
+ * 2. Retorna a string limpa apenas com letras e espaços.
+ *
+ * @param string $str A string de entrada que será sanitizada.
+ * @return string A string contendo apenas letras e espaços.
+ */
+if (!function_exists('sanitizeLettersAndSpaces')) {
+
+    function sanitizeLettersAndSpaces(string $str): string
+    {
+        return preg_replace('/[^a-zA-ZÀ-ÿ\s]/u', '', $str);
     }
 }
