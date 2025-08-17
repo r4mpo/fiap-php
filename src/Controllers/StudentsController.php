@@ -85,6 +85,26 @@ class StudentsController extends Controller
     }
 
     /**
+     * Executa o processamento de dados de criação ou atualização de um aluno.
+     *
+     * Esta função realiza os seguintes passos:
+     * 1. Obtém os dados enviados pelo formulário através do método `input()`.
+     * 2. Chama o serviço `studentsService->createOrUpdate()` para cadastrar ou atualizar
+     *    o aluno com base nos dados fornecidos.
+     * 3. Retorna o resultado do processamento em formato JSON, contendo informações
+     *    como código de sucesso/erro e mensagens correspondentes.
+     * 4. Interrompe a execução do script imediatamente após enviar a resposta.
+     *
+     * @return void
+     */
+    public function exeData(): void
+    {
+        $execute = $this->studentsService->createOrUpdate($this->input());
+        echo json_encode($execute);
+        exit;
+    }
+
+    /**
      * Controlador para excluir um aluno específico.
      *
      * Esta função é responsável por:
@@ -102,7 +122,7 @@ class StudentsController extends Controller
      * @param array $params Parâmetros recebidos da rota, sendo o primeiro o ID do aluno codificado
      * @return void Retorna resposta JSON diretamente ao cliente
      */
-    public function delete($params)
+    public function delete($params): void
     {
         $studentId = base64urlDecode($params[0]);
         $execute = $this->studentsService->delete($studentId);

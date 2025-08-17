@@ -60,7 +60,7 @@ class RegistrationsController extends Controller
      *                      o índice [0] representa o ID da turma (em Base64).
      * @return void
      */
-    public function search($params)
+    public function search($params): void
     {
         $classId = base64urlDecode($params[0]);
         $students = $this->registrationsService->getStudents($classId);

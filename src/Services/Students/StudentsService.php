@@ -2,6 +2,7 @@
 
 namespace Src\Services\Students;
 
+use Src\DTOs\StudentsDTO;
 use Src\Repositories\StudentsRepository;
 
 class StudentsService
@@ -85,6 +86,52 @@ class StudentsService
         if ($rowAffected > 0) {
             $result['code'] = '111';
             $result['message'] = 'Informações excluídas com sucesso.';
+        }
+
+        return $result;
+    }
+
+    /**
+     * Cria ou atualiza um aluno no banco de dados a partir dos parâmetros fornecidos.
+     *
+     * Fluxo de execução:
+     * 1. Inicializa um array padrão de retorno ($result) com código de erro "333"
+     *    e mensagem genérica de falha.
+     * 2. Instancia um DTO (Data Transfer Object) dos alunos com os parâmetros recebidos.
+     * 3. Executa a validação dos dados do DTO:
+     *    - Caso inválido, retorna imediatamente os erros de validação.
+     * 4. Se os dados forem válidos, delega a persistência ao repositório
+     *    chamando o método `register()`, que pode criar ou atualizar o registro.
+     * 5. Caso a operação afete pelo menos uma linha no banco, redefine o retorno
+     *    com código de sucesso "111" e mensagem de confirmação.
+     *
+     * @param array $params Parâmetros de entrada para criação/atualização (ex.: id, name, description, etc.).
+     * @return array Estrutura de retorno contendo:
+     *               - 'code' (string): código de status da operação ("111" para sucesso, "333" para falha).
+     *               - 'message' (string): mensagem descritiva do resultado.
+     *               - Em caso de falha de validação, pode retornar estrutura customizada do DTO.
+     */
+    public function createOrUpdate(array $params)
+    {
+        $result = [];
+        $result['code'] = '333';
+        $result['message'] = 'Houve um erro ao atualizar a informação solicitada.';
+
+        $dto = new StudentsDTO($params);
+        $validate = $dto->validate();
+
+        var_dump($validate);exit;
+        if ($validate['invalid']) {
+            return $validate;
+        }
+
+        $rowAffected = $this->studentsRepository->register($validate);
+
+
+        if ($rowAffected > 0) {
+            $result['code'] = '111';
+            $result['message'] = 'Informação atualizada com sucesso.';
+            $result['redirect'] = BASE_URL . '/students';
         }
 
         return $result;

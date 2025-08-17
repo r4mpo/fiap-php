@@ -185,3 +185,81 @@ if (!function_exists('sanitizeString')) {
         return $str;
     }
 }
+
+/**
+ * Remove todos os caracteres não numéricos de uma string.
+ *
+ * Esta função é útil para sanitizar entradas que devem conter apenas números,
+ * como CPF, CNPJ, telefones ou códigos numéricos.
+ *
+ * Processos realizados:
+ * 1. `preg_replace('/\D/', '', $str)`:
+ *    - Substitui todos os caracteres que **não são dígitos (0-9)** por uma string vazia.
+ *    - Garante que a saída contenha apenas números.
+ *
+ * 2. `trim($str)`:
+ *    - Remove espaços em branco do início e fim da string resultante.
+ *    - Evita problemas de formatação ou validação de números.
+ *
+ * @param string $str A string de entrada que será filtrada.
+ * @return string A string contendo apenas os números.
+ */
+if (!function_exists('sanitizeNumbers')) {
+    function sanitizeNumbers($str)
+    {
+        $str = preg_replace('/\D/', '', $str);
+        $str = trim($str);
+        return $str;
+    }
+}
+
+/**
+ * Valida se uma string é um e-mail no formato correto.
+ *
+ * Esta função verifica se o valor fornecido segue um padrão de e-mail válido,
+ * garantindo que contenha um usuário, o símbolo "@" e um domínio apropriado.
+ *
+ * Processos realizados:
+ * 1. `filter_var($email, FILTER_VALIDATE_EMAIL)`:
+ *    - Utiliza o filtro nativo do PHP para validar e-mails.
+ *    - Retorna `false` caso o e-mail seja inválido.
+ *
+ * 2. `trim($email)`:
+ *    - Remove espaços em branco do início e fim da string.
+ *    - Evita erros de validação devido a espaços extras.
+ *
+ * @param string $email O endereço de e-mail a ser validado.
+ * @return bool Retorna `true` se o e-mail for válido, `false` caso contrário.
+ */
+if (!function_exists('validateEmail')) {
+    function validateEmail(string $email): bool
+    {
+        $email = trim($email);
+        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+    }
+}
+
+/**
+ * Valida se uma senha é considerada forte.
+ *
+ * Critérios de senha forte:
+ * 1. Possui ao menos 8 caracteres.
+ * 2. Contém ao menos uma letra maiúscula.
+ * 3. Contém ao menos uma letra minúscula.
+ * 4. Contém ao menos um número.
+ * 5. Contém ao menos um caractere especial (símbolo).
+ *
+ * @param string $password A senha a ser validada.
+ * @return bool Retorna `true` se a senha atende aos critérios, `false` caso contrário.
+ */
+if (!function_exists('validateStrongPassword')) {
+    function validateStrongPassword(string $password): bool
+    {
+        $password = trim($password);
+
+        // Expressão regular para senha forte
+        $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/';
+
+        return preg_match($pattern, $password) === 1;
+    }
+}

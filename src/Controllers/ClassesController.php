@@ -51,7 +51,20 @@ class ClassesController extends Controller
         $this->form('', '', '');
     }
 
-    public function exeData()
+    /**
+     * Executa o processamento de dados de criação ou atualização de uma turma.
+     *
+     * Esta função realiza os seguintes passos:
+     * 1. Obtém os dados enviados pelo formulário através do método `input()`.
+     * 2. Chama o serviço `classesService->createOrUpdate()` para cadastrar ou atualizar
+     *    a turma com base nos dados fornecidos.
+     * 3. Retorna o resultado do processamento em formato JSON, contendo informações
+     *    como código de sucesso/erro e mensagens correspondentes.
+     * 4. Interrompe a execução do script imediatamente após enviar a resposta.
+     *
+     * @return void
+     */
+    public function exeData(): void
     {
         $execute = $this->classesService->createOrUpdate($this->input());
         echo json_encode($execute);
@@ -99,7 +112,7 @@ class ClassesController extends Controller
      * @param array $params Parâmetros recebidos da rota, sendo o primeiro o ID da turma codificado
      * @return void Retorna resposta JSON diretamente ao cliente
      */
-    public function delete($params)
+    public function delete($params): void
     {
         $classId = base64urlDecode($params[0]);
         $execute = $this->classesService->delete($classId);
@@ -119,7 +132,7 @@ class ClassesController extends Controller
      * @param array $params Parâmetros recebidos (espera-se que o primeiro elemento seja o ID codificado).
      * @return void
      */
-    public function formEdit($params)
+    public function formEdit($params): void
     {
         $classId = base64urlDecode($params[0]);
         $class = $this->show($classId);
