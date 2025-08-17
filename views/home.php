@@ -58,8 +58,8 @@
           <div class="icon-box mb-3"><i class="ri-bar-chart-box-line"></i></div>
           <h5 class="card-title">Relatórios</h5>
           <p class="card-text">
-            Gere relatórios detalhados sobre alunos, turmas e matrículas. 
-            Utilize filtros para extrair informações relevantes e apoiar a gestão.
+            Relatório de apresentação dos dados das 5 turmas com 
+            maiores números de matrícula - apresentado de forma gráfica.
           </p>
         </div>
       </div>
