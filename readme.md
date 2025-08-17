@@ -24,6 +24,7 @@ git clone https://github.com/r4mpo/fiap-php.git
   ./database/dump.sql
   ```
 - Importe o arquivo `dump.sql` para sua base de dados (ex: **phpMyAdmin**).
+- A base de dados foi originalmente criada no **phpMyAdmin**. Para facilitar a importação e evitar possíveis incompatibilidades, também disponibilizei o **dump2.sql**, refatorado para seguir os padrões convencionais do **MySQL**.
 
 ### 3. Configurar conexão com o banco
 - Copie o arquivo:
