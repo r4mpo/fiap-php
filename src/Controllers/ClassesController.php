@@ -46,12 +46,12 @@ class ClassesController extends Controller
      *
      * @return void
      */
-    public function create(): void
+    public function formData(): void
     {
         $this->form('', '', '');
     }
 
-    public function exeCreate()
+    public function exeData()
     {
         $execute = $this->classesService->createOrUpdate($this->input());
         echo json_encode($execute);exit;

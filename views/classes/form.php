@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/../templates/navbar.php'; ?>
 
 <form id="genericForm" class="container mt-4" method="POST" onsubmit="return false;"
-  action="<?php echo BASE_URL ?>/exeCreateClasses">
+  action="<?php echo BASE_URL ?>/exeDataClasses">
   <div class="mb-3">
     <label class="form-label">Nome da turma</label>
     <div class="input-group">
