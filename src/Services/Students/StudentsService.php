@@ -111,7 +111,7 @@ class StudentsService
      *               - 'message' (string): mensagem descritiva do resultado.
      *               - Em caso de falha de validação, pode retornar estrutura customizada do DTO.
      */
-    public function createOrUpdate(array $params)
+    public function createOrUpdate(array $params): array
     {
         $result = [];
         $result['code'] = '333';

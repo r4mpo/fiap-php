@@ -11,5 +11,7 @@
             "email": "erick1souza1ago04@gmail.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    }
 }
