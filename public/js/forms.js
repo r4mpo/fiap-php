@@ -2,6 +2,14 @@ $(document).ready(function () {
 
     let baseUrl = $("meta[name='baseUrl']").attr("content");
 
+    $('.cpf').on('input', function () {
+        let value = $(this).val().replace(/\D/g, '');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        $(this).val(value);
+    });
+
     $('#genericForm').on('submit', function (e) {
         e.preventDefault();
         let form = $(this);
@@ -40,6 +48,27 @@ $(document).ready(function () {
                 input.addClass('is-invalid');
                 valid = false;
             }
+
+            // valida email
+            if (input.name === 'email' && val) {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(val)) {
+                    isValid = false;
+                    input.addClass('is-invalid');
+                    feedback.text('Informe um e-mail válido.');
+                }
+            }
+
+            // valida senha forte
+            if (input.name === 'password' && val) {
+                const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+                if (!strongPassword.test(val)) {
+                    isValid = false;
+                    input.addClass('is-invalid');
+                    feedback.text('A senha deve ter no mínimo 8 caracteres, incluindo letras maiúsculas, minúsculas, números e símbolos.');
+                }
+            }
+
         });
 
         if (valid) {
@@ -49,7 +78,7 @@ $(document).ready(function () {
                 data: form.serialize(),
                 dataType: 'json',
                 success: function (response) {
-                    if (response.code === '111'){
+                    if (response.code === '111') {
                         message('Sucesso!', response.message ?? 'Operação realizada com sucesso.', 'success');
                         setTimeout(() => {
                             window.location.href = response.redirect;

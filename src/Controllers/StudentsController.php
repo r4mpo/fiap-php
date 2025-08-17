@@ -39,6 +39,53 @@ class StudentsController extends Controller
     }
 
     /**
+     * Exibe o formulário para criação de um novo aluno.
+     *
+     * Inicializa o formulário com campos vazios, já que se trata
+     * de um novo registro e não de edição.
+     *
+     * @return void
+     */
+    public function formData(): void
+    {
+        $this->form('', '', '', '', '');
+    }
+
+    /**
+     * Carrega a view do formulário de alunos com os dados fornecidos.
+     *
+     * Esta função é genérica e pode ser utilizada tanto para criação
+     * quanto para edição de alunos. Recebe:
+     * - $id: ID do aluno (vazio para novo registro)
+     * - $name: Nome do aluno
+     * - $document: CPF do aluno
+     * - $email: E-mail do aluno
+     * - $dateOfBirth: Data de Nascimento do aluno
+     *
+     * @param string $id          ID do aluno
+     * @param string $name        Nome do aluno
+     * @param string $document CPF do aluno
+     * @param string $email E-mail do aluno
+     * @param string $dateOfBirth Data de Nascimento do aluno
+
+     * @return void
+     */
+    private function form($id, $name, $document, $email, $dateOfBirth): void
+    {
+        $this->view('students/form', [
+            'id' => $id,
+            'name' => $name,
+            'document' => $document,
+            'email' => $email,
+            'dateOfBirth' => $dateOfBirth,
+            'dateMax' => date('Y-m-d'),
+            'dateMin' => date('Y-m-d', strtotime(date("Y-m-d") . "-18 years")),
+
+        ]);
+    }
+
+
+    /**
      * Controlador para excluir um aluno específico.
      *
      * Esta função é responsável por:

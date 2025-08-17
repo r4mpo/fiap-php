@@ -22,6 +22,7 @@ class Routes
             '/exeLogin' => 'UsersController@exeLogin',
             // Alunos
             '/students' => 'StudentsController@index',
+            '/dataStudents' => 'StudentsController@formData',
             '/deleteStudent/{params}' => 'StudentsController@delete',
             // Turmas
             '/classes' => 'ClassesController@index',
