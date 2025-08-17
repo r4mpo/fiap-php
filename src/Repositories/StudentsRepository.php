@@ -123,4 +123,36 @@ class StudentsRepository extends Repository
 
         return $this->insert($params);
     }
+
+    /**
+     * Recupera a lista de alunos disponíveis para serem vinculados a uma turma.
+     *
+     * Regras aplicadas:
+     * - Seleciona apenas alunos ativos (students_tbl.deleted_at IS NULL).
+     * - Exclui da listagem os alunos que já possuem vínculo com a turma informada ($classId).
+     *   Isso é feito através de um subselect utilizando NOT IN.
+     * - Retorna somente os campos `id` e `name` da tabela de alunos.
+     * - Ordena os resultados alfabeticamente pelo nome.
+     *
+     * @param string $classId ID da turma que deve ser usada como referência
+     *                        para filtrar os alunos já vinculados.
+     * @return array Lista de alunos disponíveis (id e name).
+     */
+    public function getAvailableStudents(string $classId): array
+    {
+        $params = [];
+        $params['FILTER']['students_tbl.deleted_at IS NULL'] = null;
+
+        $params['FILTER']['students_tbl.id NOT IN (
+        SELECT classes_students_tbl.student_id FROM classes_students_tbl WHERE 
+        classes_students_tbl.class_id = ' . $classId . ' AND classes_students_tbl.deleted_at IS NULL
+        )'] = null;
+
+        $params['FIELDS'] = 'students_tbl.id, students_tbl.name';
+        $params['ORDERBY'] = 'students_tbl.name ASC';
+
+        // Executa a consulta no banco de dados com os parâmetros definidos
+        return $this->consult($params);
+    }
+
 }

@@ -26,6 +26,7 @@
   </div>
 
   <button type="submit" class="btn btn-success"><i class="ri-add-circle-line"></i> Registrar</button>
+    <a href="<?php echo BASE_URL ?>/classes"><button type="button" class="btn btn-primary"><i class="ri-corner-down-left-fill"></i> Retornar</button></a>
 </form>
 
 <?php require_once __DIR__ . '/../templates/bottom-bar.php'; ?>

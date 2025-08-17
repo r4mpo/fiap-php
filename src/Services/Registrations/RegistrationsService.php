@@ -3,6 +3,7 @@
 namespace Src\Services\Registrations;
 
 use Src\Repositories\RegistrationsRepository;
+use Src\Repositories\StudentsRepository;
 
 class RegistrationsService
 {
@@ -14,14 +15,22 @@ class RegistrationsService
     private RegistrationsRepository $registrationsRepository;
 
     /**
+     * Repositório responsável pelas operações de banco de dados relacionadas aos alunos.
+     *
+     * @var StudentsRepository
+     */
+    private StudentsRepository $studentsRepository;
+
+    /**
      * Construtor da classe RegistrationsService.
      *
-     * Inicializa a instância do repositório de matrículas, permitindo realizar
-     * consultas e manipulações na tabela de matrículas.
+     * Inicializa a instância do repositório de matrículas e de alunos, permitindo realizar
+     * consultas e manipulações na tabela de matrículas e de alunos.
      */
     public function __construct()
     {
         $this->registrationsRepository = new RegistrationsRepository();
+        $this->studentsRepository = new StudentsRepository();
     }
 
     /**
@@ -68,7 +77,7 @@ class RegistrationsService
      * @param string $classId Identificador da turma (chave primária na tabela `classes_tbl`).
      * @return array Lista de alunos matriculados na turma, contendo nome do aluno e nome da turma.
      */
-    public function getStudents(string $classId): array
+    public function getStudentsByClassId(string $classId): array
     {
         $registrations = [];
         $data = $this->registrationsRepository->getStudentsByClassId($classId);
@@ -83,5 +92,33 @@ class RegistrationsService
         }
 
         return $registrations;
+    }
+
+    /**
+     * Recupera a lista de alunos disponíveis para matrícula em uma turma específica.
+     *
+     * Processos realizados neste método:
+     * 1. Chama o repositório `getAvailableStudents::getAvailableStudents`
+     *    para obter os alunos que ainda não estão matriculados na turma informada.
+     * 2. Formata os dados dos alunos, codificando o ID da turma em base64 URL-safe.
+     *
+     * @param string $classId Identificador da turma (chave primária na tabela `classes_tbl`).
+     * @return array Lista de alunos disponíveis para matrícula, com `id` codificado e `name`.
+     */
+    public function getAvailableStudents(string $classId): array
+    {
+        $students = [];
+        $data = $this->studentsRepository->getAvailableStudents($classId);
+
+        if (!empty($data)) {
+            foreach ($data as $student) {
+                $students[] = [
+                    'id' => base64urlEncode($student['id']),
+                    'name' => $student['name'],
+                ];
+            }
+        }
+
+        return $students;
     }
 }

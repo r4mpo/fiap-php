@@ -34,6 +34,7 @@ class Routes
             '/deleteClasses/{params}' => 'ClassesController@delete',
             // Matrículas
             '/registrations' => 'RegistrationsController@index',
+            '/newRegistration/{params}' => 'RegistrationsController@newRegistration',
             '/registrations/{params}' => 'RegistrationsController@search',
         ];
     }

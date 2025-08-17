@@ -20,8 +20,8 @@
       <label for="document" class="form-label">CPF</label>
       <div class="input-group">
         <span class="input-group-text"><i class="ri-article-line"></i></span>
-        <input name="document" id="document" type="text" class="cpf form-control" data-maxlength="14" placeholder="CPF" required
-          value="<?php echo $document ?>">
+        <input name="document" id="document" type="text" class="cpf form-control" data-maxlength="14" placeholder="CPF"
+          required value="<?php echo $document ?>">
         <div class="invalid-feedback"></div>
       </div>
     </div>
@@ -30,7 +30,8 @@
       <label for="email" class="form-label">E-mail</label>
       <div class="input-group">
         <span class="input-group-text"><i class="ri-mail-line"></i></span>
-        <input name="email" id="email" type="email" class="form-control" placeholder="E-mail" required value="<?php echo $email ?>">
+        <input name="email" id="email" type="email" class="form-control" placeholder="E-mail" required
+          value="<?php echo $email ?>">
         <div class="invalid-feedback"></div>
       </div>
     </div>
@@ -57,6 +58,7 @@
   </div>
 
   <button type="submit" class="btn btn-success"><i class="ri-add-circle-line"></i></span> Registrar</button>
+  <a href="<?php echo BASE_URL ?>/students"><button type="button" class="btn btn-primary"><i class="ri-corner-down-left-fill"></i> Retornar</button></a>
 </form>
 
 <?php require_once __DIR__ . '/../templates/bottom-bar.php'; ?>

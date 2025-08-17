@@ -63,10 +63,35 @@ class RegistrationsController extends Controller
     public function search($params): void
     {
         $classId = base64urlDecode($params[0]);
-        $students = $this->registrationsService->getStudents($classId);
+        $students = $this->registrationsService->getStudentsByClassId($classId);
 
         $this->view('registrations/students', [
-            'students' => $students
+            'id' => $params[0],
+            'students' => $students,
+        ]);
+    }
+
+    /**
+     * Exibe o formulário para cadastrar uma nova matrícula.
+     *
+     * Este método é responsável por renderizar a view que permite ao usuário
+     * cadastrar uma nova matrícula, associando um aluno a uma turma específica.
+     *
+     * @param array $params Parâmetros da rota, onde o índice [0] contém o ID da turma.
+     * @return void
+     */
+    public function newRegistration($params): void
+    {
+        // Decodifica o ID da turma do parâmetro Base64 URL-safe
+        $classId = base64urlDecode($params[0]);
+
+        // Obtém a lista de alunos disponíveis para matrícula
+        $students = $this->registrationsService->getAvailableStudents($classId);
+
+        // Renderiza a view com os dados necessários
+        $this->view('registrations/newRegistration', [
+            'id' => $params[0],
+            'students' => $students,
         ]);
     }
 }
