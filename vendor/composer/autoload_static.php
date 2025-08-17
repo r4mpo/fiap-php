@@ -32,6 +32,7 @@ class ComposerStaticInit500cc584768ce76e56fe598750f1b8d6
         'Src\\Core\\Core' => __DIR__ . '/../..' . '/src/Core/Core.php',
         'Src\\Core\\Model' => __DIR__ . '/../..' . '/src/Core/Model.php',
         'Src\\Core\\Repository' => __DIR__ . '/../..' . '/src/Core/Repository.php',
+        'Src\\DTOs\\ClassesDTO' => __DIR__ . '/../..' . '/src/DTOs/ClassesDTO.php',
         'Src\\Models\\Classes' => __DIR__ . '/../..' . '/src/Models/Classes.php',
         'Src\\Models\\Registrations' => __DIR__ . '/../..' . '/src/Models/Registrations.php',
         'Src\\Models\\Students' => __DIR__ . '/../..' . '/src/Models/Students.php',

@@ -146,3 +146,42 @@ if (!function_exists('base64urlEncode')) {
         return rtrim($base64url, '=');
     }
 }
+
+/**
+ * Sanitiza uma string para uso seguro em aplicações web.
+ *
+ * Esta função realiza uma limpeza completa da string recebida,
+ * protegendo contra possíveis ataques de Cross-Site Scripting (XSS)
+ * e garantindo que o valor seja seguro para exibição em HTML.
+ *
+ * Processos realizados:
+ * 1. `strip_tags($str)`:
+ *    - Remove todas as tags HTML e PHP da string.
+ *    - Impede que códigos HTML ou scripts sejam executados na página.
+ *
+ * 2. `trim($str)`:
+ *    - Remove espaços em branco extras do início e fim da string.
+ *    - Garante consistência e evita erros em comparações ou armazenamento.
+ *
+ * 3. `htmlspecialchars($str, ENT_QUOTES, 'UTF-8')`:
+ *    - Converte caracteres especiais em entidades HTML, como:
+ *      - < → &lt;
+ *      - > → &gt;
+ *      - " → &quot;
+ *      - ' → &#039;
+ *    - Protege contra XSS ao exibir a string em páginas HTML.
+ *    - O parâmetro `ENT_QUOTES` garante que tanto aspas simples quanto duplas sejam convertidas.
+ *    - UTF-8 é usado como charset para suportar caracteres especiais corretamente.
+ *
+ * @param string $str A string de entrada que será sanitizada.
+ * @return string A string limpa, segura para exibição e armazenamento.
+ */
+if (!function_exists('sanitizeString')) {
+    function sanitizeString($str)
+    {
+        $str = strip_tags($str);
+        $str = trim($str);
+        $str = htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+        return $str;
+    }
+}

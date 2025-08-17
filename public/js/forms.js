@@ -48,8 +48,8 @@ $(document).ready(function () {
                 method: 'POST',
                 data: form.serialize(),
                 dataType: 'json',
-                success: function (data) {
-                    if (data.code === '111'){
+                success: function (response) {
+                    if (response.code === '111'){
                         message('Sucesso!', response.message ?? 'Operação realizada com sucesso.', 'success');
                         setTimeout(() => {
                             window.location.reload();

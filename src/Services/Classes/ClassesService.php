@@ -2,6 +2,7 @@
 
 namespace Src\Services\Classes;
 
+use Src\DTOs\ClassesDTO;
 use Src\Repositories\ClassesRepository;
 
 class ClassesService
@@ -56,7 +57,7 @@ class ClassesService
         return $classes;
     }
 
-        /**
+    /**
      * Realiza a exclusão de uma turma utilizando exclusão lógica (soft delete).
      *
      * Esta função é responsável por:
@@ -86,6 +87,19 @@ class ClassesService
         }
 
         return $result;
+    }
+
+    public function createOrUpdate(array $params)
+    {
+        $dto = new ClassesDTO($params);
+        $validate = $dto->validate();
+
+        if ($validate['invalid']) {
+            return $validate;
+        }
+
+        var_dump('teste');
+        exit;
     }
 
 }

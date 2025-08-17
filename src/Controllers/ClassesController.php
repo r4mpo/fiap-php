@@ -51,6 +51,12 @@ class ClassesController extends Controller
         $this->form('', '', '');
     }
 
+    public function exeCreate()
+    {
+        $execute = $this->classesService->createOrUpdate($this->input());
+        echo json_encode($execute);exit;
+    }
+
     /**
      * Carrega a view do formulário de turmas com os dados fornecidos.
      *

@@ -17,6 +17,7 @@ return array(
     'Src\\Core\\Core' => $baseDir . '/src/Core/Core.php',
     'Src\\Core\\Model' => $baseDir . '/src/Core/Model.php',
     'Src\\Core\\Repository' => $baseDir . '/src/Core/Repository.php',
+    'Src\\DTOs\\ClassesDTO' => $baseDir . '/src/DTOs/ClassesDTO.php',
     'Src\\Models\\Classes' => $baseDir . '/src/Models/Classes.php',
     'Src\\Models\\Registrations' => $baseDir . '/src/Models/Registrations.php',
     'Src\\Models\\Students' => $baseDir . '/src/Models/Students.php',
