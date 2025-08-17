@@ -19,26 +19,39 @@ class StudentsRepository extends Repository
     }
 
     /**
-     * Recupera todos os alunos ativos do sistema.
+     * Recupera todos os alunos ativos do sistema, com possibilidade de filtros adicionais.
      *
-     * Esta função constrói os parâmetros necessários para consultar a base de dados
-     * e retorna apenas os alunos que não foram deletados (`deleted_at IS NULL`).
+     * Esta função monta os parâmetros necessários para consultar a base de dados,
+     * retornando apenas os alunos que não foram deletados (`deleted_at IS NULL`).
+     * Caso sejam fornecidos filtros adicionais, eles serão aplicados à consulta.
      *
-     * Parâmetros utilizados na consulta:
-     * - FILTER: filtra registros onde `deleted_at` é nulo (somente ativos).
-     * - FIELDS: seleciona os campos `id`, `name`, `date_of_birth`, `document` e `email`.
+     * Parâmetros da consulta:
+     * - FILTER: aplica filtro para selecionar apenas registros ativos e outros filtros opcionais.
+     * - FIELDS: define os campos a serem retornados: `id`, `name`, `date_of_birth`, `document` e `email`.
      * - ORDERBY: ordena os resultados pelo campo `name` em ordem crescente.
      *
-     * Em seguida, chama o método `consult()` do repositório para executar a query.
+     * Processos realizados:
+     * 1. Define o filtro padrão para alunos ativos.
+     * 2. Define os campos a serem retornados.
+     * 3. Aplica quaisquer filtros adicionais passados via parâmetro `$filters`.
+     * 4. Chama o método `consult()` do repositório para executar a query e obter os resultados.
      *
-     * @return array Lista de alunos ativos com os campos especificados.
+     * @param array $filters (opcional) Array associativo de filtros adicionais no formato ['campo' => 'valor'].
+     * @return array Lista de alunos ativos, cada item contendo os campos especificados.
      */
-    public function getAll(): array
+    public function getAll(array $filters = []): array
     {
         $params = [];
         $params['FILTER']['deleted_at IS NULL'] = NULL;
         $params['FIELDS'] = 'id, name, date_of_birth, document, email';
         $params['ORDERBY'] = 'name ASC';
+
+        // Se filtros adicionais forem passados, adiciona ao array de parâmetros
+        if (!empty($filters)) {
+            foreach ($filters as $key => $value) {
+                $params['FILTER'][$key] = $value;
+            }
+        }
 
         // Chama o método consult() do Repository para executar a query
         return $this->consult($params);
@@ -68,5 +81,45 @@ class StudentsRepository extends Repository
         $params['SET']['deleted_at'] = date('Y-m-d H:i:s');
 
         return $this->alter($params);
+    }
+
+    /**
+     * Registra ou atualiza um aluno no banco de dados.
+     *
+     * Esta função recebe um array de campos contendo os dados do aluno e decide se deve
+     * criar um novo registro ou atualizar um existente, com base na presença do campo 'id'.
+     *
+     * Processos realizados:
+     * 1. Monta o array `$params['SET']` com os campos a serem inseridos/atualizados:
+     *    - `name`          => Nome do aluno.
+     *    - `date_of_birth` => Data de nascimento do aluno.
+     *    - `document`      => CPF ou documento do aluno (apenas números).
+     *    - `email`         => E-mail do aluno.
+     *    - `password`      => Senha do aluno (hash já gerado anteriormente).
+     *    - `updated_at`    => Data e hora da atualização (atual timestamp).
+     *
+     * 2. Verifica se existe o campo 'id' no array `$fields`:
+     *    - Se existir, monta `$params['FILTER']['id']` e chama o método `alter()` para atualizar o registro existente.
+     *    - Se não existir, chama o método `insert()` para criar um novo registro no banco de dados.
+     *
+     * @param array $fields Array associativo contendo os dados do aluno.
+     * @return int Número de linhas afetadas pelo insert ou update.
+     */
+    public function register(array $fields): int
+    {
+        $params = [];
+        $params['SET']['name'] = $fields['name'];
+        $params['SET']['date_of_birth'] = $fields['date_of_birth'];
+        $params['SET']['document'] = $fields['document'];
+        $params['SET']['email'] = $fields['email'];
+        $params['SET']['password'] = $fields['password'];
+        $params['SET']['updated_at'] = date('Y-m-d H:i:s');
+
+        if (!empty($fields['id'])) {
+            $params['FILTER']['id'] = $fields['id'];
+            return $this->alter($params);
+        }
+
+        return $this->insert($params);
     }
 }

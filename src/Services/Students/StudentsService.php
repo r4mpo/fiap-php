@@ -123,10 +123,32 @@ class StudentsService
         if ($validate['invalid']) {
             return $validate;
         }
-                var_dump($validate);exit;
+
+
+        $paramsConsultByCpf = [];
+        $paramsConsultByCpf['document'] = $validate['document'];
+        $getByCpf = $this->studentsRepository->getAll($paramsConsultByCpf);
+
+
+        if (!empty($getByCpf) && $getByCpf[0]['id'] !== $validate['id']) {
+            return [
+                'code' => '333',
+                'message' => 'Já existe um aluno cadastrado com este CPF.',
+            ];
+        }
+        
+        $paramsConsultByEmail = [];
+        $paramsConsultByEmail['email'] = $validate['email'];
+        $getByEmail = $this->studentsRepository->getAll($paramsConsultByEmail);
+
+        if (!empty($getByEmail) && $getByEmail[0]['id'] !== $validate['id']) {
+            return [
+                'code' => '333',
+                'message' => 'Já existe um aluno cadastrado com este e-mail.',
+            ];
+        }
 
         $rowAffected = $this->studentsRepository->register($validate);
-
 
         if ($rowAffected > 0) {
             $result['code'] = '111';
