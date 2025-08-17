@@ -54,7 +54,8 @@ class ClassesController extends Controller
     public function exeData()
     {
         $execute = $this->classesService->createOrUpdate($this->input());
-        echo json_encode($execute);exit;
+        echo json_encode($execute);
+        exit;
     }
 
     /**
@@ -100,9 +101,42 @@ class ClassesController extends Controller
      */
     public function delete($params)
     {
-        $studentId = base64urlDecode($params[0]);
-        $execute = $this->classesService->delete($studentId);
+        $classId = base64urlDecode($params[0]);
+        $execute = $this->classesService->delete($classId);
         echo json_encode($execute);
         exit;
+    }
+
+    /**
+     * Exibe o formulário de edição de uma turma.
+     *
+     * Processos realizados nesta função:
+     * 1. Decodifica o identificador da turma (ID) recebido nos parâmetros da URL usando Base64URL.
+     * 2. Busca os dados completos da turma através do método `show`.
+     * 3. Chama o método `form` para renderizar o formulário de edição,
+     *    já preenchido com os dados da turma (id, nome e descrição).
+     *
+     * @param array $params Parâmetros recebidos (espera-se que o primeiro elemento seja o ID codificado).
+     * @return void
+     */
+    public function formEdit($params)
+    {
+        $classId = base64urlDecode($params[0]);
+        $class = $this->show($classId);
+        $this->form($class['id'], $class['name'], $class['description']);
+    }
+
+    /**
+     * Recupera os dados de uma turma específica.
+     *
+     * Este método é um "atalho" que delega a chamada ao service `classesService`,
+     * garantindo que os dados da turma sejam retornados já no formato adequado.
+     *
+     * @param int|string $classId Identificador único da turma.
+     * @return array Dados da turma (id, name, description).
+     */
+    private function show($classId): array
+    {
+        return $this->classesService->getById($classId);
     }
 }

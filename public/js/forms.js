@@ -52,7 +52,7 @@ $(document).ready(function () {
                     if (response.code === '111'){
                         message('Sucesso!', response.message ?? 'Operação realizada com sucesso.', 'success');
                         setTimeout(() => {
-                            window.location.reload();
+                            window.location.href = response.redirect;
                         }, 1000);
                     } else {
                         message('Oops!', response.message ?? 'Houve um erro ao realizar a operação.', 'error');

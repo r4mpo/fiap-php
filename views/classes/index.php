@@ -23,7 +23,7 @@
                             <td><?php echo $class['description'] ?></td>
                             <td><?php echo $class['qttStudents'] ?></td>
                             <td>
-                                <button type="button" class="btn btn-outline-primary"><i class="ri-pencil-fill"></i></button>
+                                <a href="<?php echo BASE_URL ?>/editClasses/<?php echo base64urlEncode($class['id']) ?>"><button type="button" class="btn btn-outline-primary"><i class="ri-pencil-fill"></i></button></a>
                                 <button type="button" class="btn btn-outline-danger delete-data-open-modal" 
                                     data-id="<?php echo $class['id'] ?>"
                                     data-name="<?php echo $class['name'] ?>"

@@ -41,7 +41,7 @@ class ClassesService
     public function index(): array
     {
         $classes = [];
-        $data = $this->classesRepository->getAll();
+        $data = $this->classesRepository->getClasses();
 
         if (!empty($data)) {
             foreach ($data as $class) {
@@ -70,16 +70,16 @@ class ClassesService
      *    - `code`    => código do resultado da operação ('111' = sucesso, '333' = erro)
      *    - `message` => mensagem explicativa do resultado
      *
-     * @param string $studentId ID do turma a ser excluído
+     * @param string $classId ID do turma a ser excluído
      * @return array Array contendo `code` e `message` indicando o resultado da operação
      */
-    public function delete(string $studentId): array
+    public function delete(string $classId): array
     {
         $result = [];
         $result['code'] = '333';
         $result['message'] = 'Houve um erro ao excluir a informação solicitada.';
 
-        $rowAffected = $this->classesRepository->softDelete($studentId);
+        $rowAffected = $this->classesRepository->softDelete($classId);
 
         if ($rowAffected > 0) {
             $result['code'] = '111';
@@ -128,8 +128,34 @@ class ClassesService
         if ($rowAffected > 0) {
             $result['code'] = '111';
             $result['message'] = 'Informação atualizada com sucesso.';
+            $result['redirect'] = BASE_URL . '/classes';
         }
 
         return $result;
+    }
+
+    /**
+     * Recupera uma turma pelo seu identificador.
+     *
+     * Processos realizados nesta função:
+     * 1. Chama o repositório de turmas para buscar os dados da turma com base no ID informado.
+     * 2. Codifica o campo `id` em Base64URL para maior segurança e uso em URLs.
+     * 3. Retorna os dados formatados em um array associativo contendo:
+     *    - id (codificado em Base64URL),
+     *    - name (nome da turma),
+     *    - description (descrição da turma).
+     *
+     * @param int|string $classId Identificador da turma (pode ser inteiro ou string, dependendo da origem).
+     * @return array Dados da turma formatados e prontos para exibição ou transporte.
+     */
+    public function getById($classId)
+    {
+        $data = $this->classesRepository->getClasses($classId);
+
+        return [
+            'id' => base64urlEncode($data[0]['id']),
+            'name' => $data[0]['name'],
+            'description' => $data[0]['description'],
+        ];
     }
 }

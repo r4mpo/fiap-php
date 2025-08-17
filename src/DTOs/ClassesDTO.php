@@ -36,14 +36,14 @@ class ClassesDTO
     /**
      * Construtor da classe.
      *
-     * Recebe um array de parâmetros e sanitiza os valores de 'name' e 'description'
+     * Recebe um array de parâmetros e sanitiza os valores de 'id', 'name' e 'description'
      * usando a função `sanitizeString` para evitar HTML e caracteres perigosos.
      *
-     * @param array $params Array associativo contendo 'name' e 'description'.
+     * @param array $params Array associativo contendo 'id', 'name' e 'description'.
      */
     public function __construct(array $params)
     {
-        $this->id = isset($params['id']) ? sanitizeString($params['id']) : null;
+        $this->id = isset($params['id']) ? base64urlDecode($params['id']) : null;
         $this->name = isset($params['name']) ? sanitizeString($params['name']) : null;
         $this->description = isset($params['description']) ? sanitizeString($params['description']) : null;
     }

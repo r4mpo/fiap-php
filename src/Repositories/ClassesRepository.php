@@ -19,30 +19,37 @@ class ClassesRepository extends Repository
     }
 
     /**
-     * Recupera todas as turmas ativas do sistema junto com a quantidade de alunos matriculados em cada uma.
+     * Recupera todas as turmas ativas do sistema e, opcionalmente, uma turma específica pelo seu ID,
+     * incluindo a quantidade de alunos ativos matriculados em cada uma.
      *
-     * Esta função constrói os parâmetros necessários para a consulta no banco de dados:
-     * - Retorna apenas turmas que não foram deletadas (`classes_tbl.deleted_at IS NULL`).
-     * - Considera apenas alunos ativos (`students_tbl.deleted_at IS NULL`).
-     * - Realiza LEFT JOIN com a tabela `classes_students_tbl` para relacionar turmas com alunos.
-     * - Realiza LEFT JOIN com a tabela `students_tbl` para garantir que apenas alunos ativos sejam contabilizados.
+     * Regras e processos aplicados:
+     * - Considera apenas turmas não deletadas (`classes_tbl.deleted_at IS NULL`).
+     * - Considera apenas alunos não deletados (`students_tbl.deleted_at IS NULL`).
+     * - Se o parâmetro `$classId` for informado, aplica filtro para retornar apenas a turma correspondente.
+     * - Seleciona os campos da turma (`id`, `name`, `description`) e contabiliza o número de alunos
+     *   relacionados via `COUNT(classes_students_tbl.student_id)` como `qttStudents`.
+     * - Relaciona turmas e alunos por meio de dois LEFT JOINs:
+     *   - `classes_students_tbl`: liga turmas aos alunos matriculados.
+     *   - `students_tbl`: garante que apenas alunos ativos sejam contabilizados.
+     * - Agrupa os resultados pelo ID da turma (`GROUPBY classes_tbl.id`) para consolidar a contagem.
+     * - Ordena o resultado pelo nome da turma em ordem crescente (`ORDERBY classes_tbl.name ASC`).
      *
-     * Parâmetros da consulta:
-     * - FILTER: aplica filtros para turmas e alunos ativos.
-     * - FIELDS: seleciona os campos `id`, `name`, `description` da turma e a contagem de alunos como `qttStudents`.
-     * - JOIN: realiza os LEFT JOINs necessários para relacionar turmas e alunos.
-     * - GROUPBY: agrupa os resultados pelo `id` da turma, permitindo contar corretamente os alunos.
-     * - ORDERBY: ordena as turmas pelo campo `name` em ordem crescente.
+     * Por fim, os parâmetros de consulta são enviados para o método `consult()`, que executa a query
+     * no banco de dados e retorna os resultados formatados.
      *
-     * Ao final, chama o método `consult()` do repositório, que executa a query e retorna os resultados.
-     *
-     * @return array Lista de turmas ativas com a contagem de alunos matriculados em cada uma
+     * @param int|null $classId (opcional) ID da turma a ser filtrada
+     * @return array Lista de turmas ativas (ou a turma filtrada) com a contagem de alunos matriculados
      */
-    public function getAll(): array
+    public function getClasses($classId = null): array
     {
         $params = [];
         $params['FILTER']['classes_tbl.deleted_at IS NULL'] = NULL;
         $params['FILTER']['students_tbl.deleted_at IS NULL'] = NULL;
+
+        if ($classId != null) {
+            $params['FILTER']['classes_tbl.id'] = $classId;
+        }
+
         $params['FIELDS'] = 'classes_tbl.id, classes_tbl.name, classes_tbl.description, COUNT(classes_students_tbl.student_id) AS qttStudents';
         $params['GROUPBY'] = 'classes_tbl.id';
         $params['ORDERBY'] = 'classes_tbl.name ASC';

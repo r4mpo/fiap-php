@@ -26,6 +26,7 @@ class Routes
             // Turmas
             '/classes' => 'ClassesController@index',
             '/dataClasses' => 'ClassesController@formData',
+            '/editClasses/{params}' => 'ClassesController@formEdit',
             '/exeDataClasses' => 'ClassesController@exeData',
             '/deleteClasses/{params}' => 'ClassesController@delete',
             // Matrículas
