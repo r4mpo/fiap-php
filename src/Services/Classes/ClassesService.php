@@ -148,7 +148,7 @@ class ClassesService
      * @param int|string $classId Identificador da turma (pode ser inteiro ou string, dependendo da origem).
      * @return array Dados da turma formatados e prontos para exibição ou transporte.
      */
-    public function getById($classId)
+    public function getById($classId): array
     {
         $data = $this->classesRepository->getClasses($classId);
 

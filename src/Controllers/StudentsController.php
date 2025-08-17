@@ -129,4 +129,37 @@ class StudentsController extends Controller
         echo json_encode($execute);
         exit;
     }
+
+    /**
+     * Prepara e exibe o formulário de edição de um aluno existente.
+     *
+     * Esta função realiza os seguintes passos:
+     * 1. Decodifica o ID do aluno recebido como parâmetro (base64url).
+     * 2. Recupera os dados completos do aluno chamando o método `show()`.
+     * 3. Chama o método `form()` passando os dados do aluno para preencher os campos do formulário.
+     *
+     * @param array $params Array contendo o ID do aluno codificado em base64 no índice 0.
+     * @return void
+     */
+    public function formEdit($params): void
+    {
+        $studentId = base64urlDecode($params[0]);
+        $student = $this->show($studentId);
+        $this->form($student['id'], $student['name'], $student['document'], $student['email'], $student['date_of_birth']);
+    }
+
+    /**
+     * Recupera os dados completos de um aluno pelo seu ID.
+     *
+     * Esta função encapsula a chamada ao serviço responsável por buscar os dados do aluno.
+     * Ela é utilizada internamente pelo controller para obter informações antes de exibir formulários
+     * ou processar alterações.
+     *
+     * @param int $studentId ID do aluno a ser recuperado.
+     * @return array Array associativo contendo os dados do aluno.
+     */
+    private function show($studentId): array
+    {
+        return $this->studentsService->getById($studentId);
+    }
 }

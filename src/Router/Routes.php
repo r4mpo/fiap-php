@@ -23,6 +23,7 @@ class Routes
             // Alunos
             '/students' => 'StudentsController@index',
             '/dataStudents' => 'StudentsController@formData',
+            '/editStudents/{params}' => 'StudentsController@formEdit',
             '/exeDataStudents' => 'StudentsController@exeData',
             '/deleteStudent/{params}' => 'StudentsController@delete',
             // Turmas

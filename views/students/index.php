@@ -25,7 +25,7 @@
                             <td><?php echo $student['date_of_birth'] ?></td>
                             <td><?php echo $student['document'] ?></td>
                             <td>
-                                <button type="button" class="btn btn-outline-primary"><i class="ri-pencil-fill"></i></button>
+                                <a href="<?php echo BASE_URL ?>/editStudents/<?php echo base64urlEncode($student['id']) ?>"><button type="button" class="btn btn-outline-primary"><i class="ri-pencil-fill"></i></button></a>
                                 <button type="button" class="btn btn-outline-danger delete-data-open-modal" 
                                     data-id="<?php echo $student['id'] ?>"
                                     data-name="<?php echo $student['name'] ?>"

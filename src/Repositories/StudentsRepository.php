@@ -86,24 +86,21 @@ class StudentsRepository extends Repository
     /**
      * Registra ou atualiza um aluno no banco de dados.
      *
-     * Esta função recebe um array de campos contendo os dados do aluno e decide se deve
-     * criar um novo registro ou atualizar um existente, com base na presença do campo 'id'.
-     *
      * Processos realizados:
-     * 1. Monta o array `$params['SET']` com os campos a serem inseridos/atualizados:
+     * 1. Monta o array `$params['SET']` com os campos recebidos:
      *    - `name`          => Nome do aluno.
-     *    - `date_of_birth` => Data de nascimento do aluno.
-     *    - `document`      => CPF ou documento do aluno (apenas números).
+     *    - `date_of_birth` => Data de nascimento.
+     *    - `document`      => CPF/documento (somente números).
      *    - `email`         => E-mail do aluno.
-     *    - `password`      => Senha do aluno (hash já gerado anteriormente).
-     *    - `updated_at`    => Data e hora da atualização (atual timestamp).
+     *    - `password`      => Senha (hash, se fornecida).
+     *    - `updated_at`    => Timestamp da atualização.
      *
-     * 2. Verifica se existe o campo 'id' no array `$fields`:
-     *    - Se existir, monta `$params['FILTER']['id']` e chama o método `alter()` para atualizar o registro existente.
-     *    - Se não existir, chama o método `insert()` para criar um novo registro no banco de dados.
+     * 2. Verifica se foi informado um `id` no array `$fields`:
+     *    - Se sim, aplica o filtro por `id` e executa `alter()` (atualização).
+     *    - Se não, executa `insert()` (novo registro).
      *
-     * @param array $fields Array associativo contendo os dados do aluno.
-     * @return int Número de linhas afetadas pelo insert ou update.
+     * @param array $fields Dados do aluno (chaves: id, name, date_of_birth, document, email, password).
+     * @return int Número de linhas afetadas (insert ou update).
      */
     public function register(array $fields): int
     {
@@ -112,7 +109,11 @@ class StudentsRepository extends Repository
         $params['SET']['date_of_birth'] = $fields['date_of_birth'];
         $params['SET']['document'] = $fields['document'];
         $params['SET']['email'] = $fields['email'];
-        $params['SET']['password'] = $fields['password'];
+
+        if (!empty($fields['password'])) {
+            $params['SET']['password'] = $fields['password'];
+        }
+
         $params['SET']['updated_at'] = date('Y-m-d H:i:s');
 
         if (!empty($fields['id'])) {

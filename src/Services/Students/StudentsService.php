@@ -136,7 +136,7 @@ class StudentsService
                 'message' => 'Já existe um aluno cadastrado com este CPF.',
             ];
         }
-        
+
         $paramsConsultByEmail = [];
         $paramsConsultByEmail['email'] = $validate['email'];
         $getByEmail = $this->studentsRepository->getAll($paramsConsultByEmail);
@@ -158,4 +158,34 @@ class StudentsService
 
         return $result;
     }
+
+    /**
+     * Recupera os dados completos de um aluno pelo seu ID.
+     *
+     * Esta função realiza os seguintes passos:
+     * 1. Monta os parâmetros para filtrar o aluno pelo ID fornecido.
+     * 2. Chama o repositório `studentsRepository` para buscar os dados do aluno.
+     * 3. Retorna um array associativo com os dados do aluno, aplicando formatações quando necessário:
+     *    - 'id': codificado em base64url para uso seguro em URLs.
+     *    - 'document': CPF formatado corretamente (ex.: 000.000.000-00).
+     *    - 'name', 'email' e 'date_of_birth': retornados diretamente do banco.
+     *
+     * @param int $studentId ID do aluno a ser recuperado.
+     * @return array Array associativo contendo os dados do aluno, formatados e prontos para uso.
+     */
+    public function getById($studentId): array
+    {
+        $params = [];
+        $params['id'] = $studentId;
+        $data = $this->studentsRepository->getAll($params);
+
+        return [
+            'id' => base64urlEncode($data[0]['id']),
+            'name' => $data[0]['name'],
+            'document' => formatCpf($data[0]['document']),
+            'email' => $data[0]['email'],
+            'date_of_birth' => $data[0]['date_of_birth'],
+        ];
+    }
+
 }

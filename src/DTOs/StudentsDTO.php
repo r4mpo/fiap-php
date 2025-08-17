@@ -101,40 +101,55 @@ class StudentsDTO
     /**
      * Valida os dados de um aluno antes de cadastro ou atualização.
      *
-     * Esta função realiza múltiplas validações em sequência, retornando imediatamente caso algum campo não esteja válido:
-     *
-     * 1. **Nome do aluno**:
+     * Regras de validação:
+     * 1. **Nome**:
      *    - Obrigatório.
-     *    - Deve possuir entre 3 e 50 caracteres.
+     *    - Mínimo: 3 caracteres | Máximo: 50 caracteres.
      *
      * 2. **Data de nascimento**:
      *    - Obrigatória.
-     *    - O aluno deve ter entre 18 e 80 anos.
+     *    - Deve garantir idade entre 18 e 80 anos.
      *
      * 3. **CPF**:
      *    - Obrigatório.
      *    - Deve conter exatamente 11 dígitos.
-     *    - Validação formal do CPF através da função `validateCpf()`.
+     *    - Validado com `validateCpf()`.
      *
      * 4. **E-mail**:
      *    - Obrigatório.
-     *    - Deve ser um e-mail válido conforme a função `validateEmail()`.
+     *    - Validado com `validateEmail()`.
      *
      * 5. **Senha**:
-     *    - Obrigatória.
-     *    - Deve atender aos critérios de senha forte (mínimo 8 caracteres, letras maiúsculas e minúsculas, números e símbolos) usando `validateStrongPassword()`.
+     *    - Obrigatória somente no cadastro (não na edição).
+     *    - Validada com `validateStrongPassword()`:
+     *      - Mínimo 8 caracteres.
+     *      - Letras maiúsculas e minúsculas.
+     *      - Números e símbolos.
      *
-     * Caso todas as validações sejam bem-sucedidas, a função retorna um array contendo:
-     * - 'invalid' => false
-     * - 'id', 'name', 'date_of_birth', 'document', 'email'
-     * - 'password' => hash seguro da senha usando password_hash()
+     * Retorno:
+     * - Em caso de falha:
+     *   ```php
+     *   [
+     *     'invalid' => true,
+     *     'code'    => '333',
+     *     'message' => 'Mensagem explicativa'
+     *   ]
+     *   ```
      *
-     * Para qualquer falha, retorna:
-     * - 'invalid' => true
-     * - 'code' => código de erro ('333')
-     * - 'message' => mensagem explicativa da falha.
+     * - Em caso de sucesso:
+     *   ```php
+     *   [
+     *     'invalid'       => false,
+     *     'id'            => (string|null),
+     *     'name'          => (string),
+     *     'date_of_birth' => (string),
+     *     'document'      => (string),
+     *     'email'         => (string),
+     *     'password'      => (hash seguro, se informado)
+     *   ]
+     *   ```
      *
-     * @return array Resultado da validação com dados sanitizados e/ou mensagens de erro.
+     * @return array Resultado da validação (dados prontos ou erro).
      */
     public function validate(): array
     {
@@ -221,14 +236,14 @@ class StudentsDTO
         }
 
         // Validação da senha
-        if (empty($this->password)) {
+        if (empty($this->password) && $this->id === null) {
             $data['code'] = '333';
             $data['message'] = 'Informe uma senha válida.';
             $data['invalid'] = true;
             return $data;
         }
 
-        if (validateStrongPassword($this->password) === false) {
+        if (!empty($this->password) && validateStrongPassword($this->password) === false) {
             $data['code'] = '333';
             $data['message'] = 'A senha informada não atende os critérios de validação.';
             $data['invalid'] = true;
@@ -240,7 +255,10 @@ class StudentsDTO
         $data['date_of_birth'] = $this->date_of_birth;
         $data['document'] = $this->document;
         $data['email'] = $this->email;
-        $data['password'] = password_hash($this->password, PASSWORD_DEFAULT);
+
+        if ($this->password !== null) {
+            $data['password'] = password_hash($this->password, PASSWORD_DEFAULT);
+        }
 
         return $data;
     }

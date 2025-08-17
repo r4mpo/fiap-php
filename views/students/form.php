@@ -39,7 +39,7 @@
       <label for="password" class="form-label">Senha</label>
       <div class="input-group">
         <span class="input-group-text"><i class="ri-key-2-line"></i></span>
-        <input name="password" id="password" type="password" class="form-control" placeholder="Senha" required>
+        <input name="password" id="password" type="password" class="form-control" placeholder="Senha" <?php echo empty($id) ? 'required' : '' ?>>
         <div class="invalid-feedback"></div>
       </div>
     </div>
