@@ -130,4 +130,51 @@ class ClassesRepository extends Repository
 
         return $this->insert($params);
     }
+
+    /**
+     * Recupera os dados para o primeiro gráfico (Top 5 turmas com mais matrículas).
+     *
+     * Processos realizados nesta função:
+     * 1. Define os campos que serão retornados:
+     *    - `class_id`: ID da turma.
+     *    - `class_name`: Nome da turma.
+     *    - `total_students`: Total de alunos matriculados na turma.
+     *
+     * 2. Faz um LEFT JOIN com a tabela `classes_students_tbl` para contar os alunos,
+     *    considerando apenas os registros que não foram logicamente deletados (`deleted_at IS NULL`).
+     *
+     * 3. Aplica filtro para considerar apenas turmas ativas (`classes_tbl.deleted_at IS NULL`).
+     *
+     * 4. Agrupa os resultados por turma (`class_id` e `class_name`) para que a contagem de alunos seja correta.
+     *
+     * 5. Ordena as turmas pelo total de alunos em ordem decrescente (`ORDER BY total_students DESC`),
+     *    para trazer as turmas com mais matrículas no topo.
+     *
+     * 6. Limita o resultado às 5 primeiras turmas (`LIMIT 5`).
+     *
+     * 7. Retorna o resultado da consulta chamando o método `consult` com os parâmetros definidos.
+     *
+     * @return array Lista das 5 turmas com maior número de matrículas, cada item contendo:
+     *               - class_id
+     *               - class_name
+     *               - total_students
+     */
+    public function getChartData(): array
+    {
+        $params = [];
+        $params['FIELDS'] = 'classes_tbl.id AS class_id, classes_tbl.name AS class_name, COUNT(classes_students_tbl.student_id) AS total_students';
+
+        $params['JOIN'][] = [
+            'TYPE' => 'LEFT',
+            'TABLE' => 'classes_students_tbl',
+            'CONDITIONS' => 'classes_tbl.id = classes_students_tbl.class_id AND classes_students_tbl.deleted_at IS NULL'
+        ];
+
+        $params['FILTER']['classes_tbl.deleted_at IS NULL'] = null;
+        $params['GROUPBY'] = 'classes_tbl.id, classes_tbl.name';
+        $params['ORDERBY'] = 'total_students DESC';
+        $params['LIMIT'] = 5;
+
+        return $this->consult($params);
+    }
 }

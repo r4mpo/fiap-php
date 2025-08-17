@@ -37,6 +37,8 @@ class Routes
             '/newRegistration/{params}' => 'RegistrationsController@newRegistration',
             '/exeDataRegistrations' => 'RegistrationsController@exeData',
             '/registrations/{params}' => 'RegistrationsController@search',
+            // Relatórios
+            '/reports' => 'ReportsController@index',
         ];
     }
 }

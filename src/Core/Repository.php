@@ -106,6 +106,9 @@ class Repository
         // Define se haverá alguma ordenação para a query
         $query .= !empty($params) && isset($params['ORDERBY']) ? (' ORDER BY ' . $params['ORDERBY']) : '';
 
+        // Define se haverá alguma limitação para a query
+        $query .= !empty($params) && isset($params['LIMIT']) ? (' LIMIT ' . $params['LIMIT']) : '';
+
         // Executa query
         return $this->select($query);
     }

@@ -1,62 +1,95 @@
 /* Ajuste do logo */
 .logo-img {
-    max-height: 40px;
+  max-height: 40px;
 }
 
 /* Animação suave no mobile menu */
 #mobileMenu.collapse {
-    display: none;
+  display: none;
 }
 
 #mobileMenu.show {
-    display: block;
-    animation: fadeIn 0.3s ease-in-out;
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-5px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 main {
-    flex: 1;
+  flex: 1;
 }
 
 footer {
-    background: #f8f9fa;
-    border-top: 1px solid #dee2e6;
+  background: #f8f9fa;
+  border-top: 1px solid #dee2e6;
 }
 
 .feature-card {
-    border: none;
-    border-radius: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease-in-out;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease-in-out;
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
 }
 
 .icon-box {
-    font-size: 2rem;
-    color: #0d6efd;
+  font-size: 2rem;
+  color: #0d6efd;
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #f8f9fa;
-    border-top: 1px solid #dee2e6;
-    padding: 0.75rem;
-    text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.charts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  max-width: 1200px; /* largura máxima para centralizar */
+  margin: 50px auto 0 auto; /* centraliza horizontalmente com margem superior */
+}
+
+.chart-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  transition: transform 0.2s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-5px);
+}
+
+.chart-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+canvas {
+  /* altura mínima para gráficos de barra/linha ficarem proporcionais */
+  min-height: 250px;
 }
