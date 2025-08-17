@@ -41,22 +41,24 @@ class ClassesDTO
     }
 
     /**
-     * Valida os campos da turma.
+     * Valida os campos de uma turma e retorna os dados validados.
      *
      * Esta função realiza as seguintes validações:
-     * 1. Verifica se o nome está presente.
-     * 2. Verifica se a descrição está presente.
-     * 3. Verifica o tamanho mínimo e máximo do nome (3 a 20 caracteres).
-     * 4. Verifica o tamanho mínimo e máximo da descrição (3 a 100 caracteres).
+     * 1. Verifica se o nome da turma está presente.
+     * 2. Verifica se a descrição da turma está presente.
+     * 3. Verifica se o tamanho do nome está entre 3 e 20 caracteres.
+     * 4. Verifica se o tamanho da descrição está entre 3 e 100 caracteres.
      *
-     * Retorna um array com:
-     * - 'invalid' => boolean indicando se há erro.
-     * - 'code' => código da validação (ex.: '333' para erro).
-     * - 'message' => mensagem explicativa do erro.
+     * Retorna um array contendo:
+     * - 'invalid' => boolean indicando se ocorreu algum erro de validação.
+     * - 'code' => código da validação (ex.: '333' para erro; ausente em caso de sucesso).
+     * - 'message' => mensagem explicativa do erro (ausente em caso de sucesso).
+     * - 'name' => valor do nome da turma (retornado apenas se válido).
+     * - 'description' => valor da descrição da turma (retornado apenas se válido).
      *
-     * @return array Resultado da validação contendo 'invalid', 'code' e 'message'.
+     * @return array Resultado da validação com informações de erro ou os dados validados.
      */
-    public function validate()
+    public function validate(): array
     {
         $data['invalid'] = false;
 
@@ -102,6 +104,8 @@ class ClassesDTO
             return $data;
         }
 
+        $data['name'] = $this->name;
+        $data['description'] = $this->description;
         return $data;
     }
 }
