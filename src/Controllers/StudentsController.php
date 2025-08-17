@@ -78,12 +78,11 @@ class StudentsController extends Controller
             'document' => $document,
             'email' => $email,
             'dateOfBirth' => $dateOfBirth,
-            'dateMax' => date('Y-m-d'),
-            'dateMin' => date('Y-m-d', strtotime(date("Y-m-d") . "-18 years")),
+            'dateMax' => date('Y-m-d', strtotime(date("Y-m-d") . "-18 years")),
+            'dateMin' => date('Y-m-d', strtotime(date("Y-m-d") . "-80 years")),
 
         ]);
     }
-
 
     /**
      * Controlador para excluir um aluno específico.

@@ -10,7 +10,7 @@
       <label for="name" class="form-label">Nome do aluno</label>
       <div class="input-group">
         <span class="input-group-text"><i class="ri-group-line"></i></span>
-        <input name="name" type="text" class="form-control" placeholder="Nome do aluno" data-minlength="3"
+        <input name="name" id="name" type="text" class="form-control" placeholder="Nome do aluno" data-minlength="3"
           data-maxlength="50" required value="<?php echo $name ?>">
         <div class="invalid-feedback"></div>
       </div>
@@ -20,7 +20,7 @@
       <label for="document" class="form-label">CPF</label>
       <div class="input-group">
         <span class="input-group-text"><i class="ri-article-line"></i></span>
-        <input name="document" type="text" class="cpf form-control" data-maxlength="14" placeholder="CPF" required
+        <input name="document" id="document" type="text" class="cpf form-control" data-maxlength="14" placeholder="CPF" required
           value="<?php echo $document ?>">
         <div class="invalid-feedback"></div>
       </div>
@@ -30,7 +30,7 @@
       <label for="email" class="form-label">E-mail</label>
       <div class="input-group">
         <span class="input-group-text"><i class="ri-mail-line"></i></span>
-        <input name="email" type="email" class="form-control" placeholder="E-mail" required value="<?php echo $email ?>">
+        <input name="email" id="email" type="email" class="form-control" placeholder="E-mail" required value="<?php echo $email ?>">
         <div class="invalid-feedback"></div>
       </div>
     </div>
@@ -39,7 +39,7 @@
       <label for="password" class="form-label">Senha</label>
       <div class="input-group">
         <span class="input-group-text"><i class="ri-key-2-line"></i></span>
-        <input name="password" type="password" class="form-control" placeholder="Senha" required>
+        <input name="password" id="password" type="password" class="form-control" placeholder="Senha" required>
         <div class="invalid-feedback"></div>
       </div>
     </div>
@@ -48,7 +48,7 @@
       <label for="description" class="form-label">Data de Nascimento</label>
       <div class="input-group">
         <span class="input-group-text"><i class="ri-calendar-line"></i></span>
-        <input name="date_of_birth" type="date" class="form-control" min="<?php echo $dateMin ?>"
+        <input id="date_of_birth" name="date_of_birth" type="date" class="form-control" min="<?php echo $dateMin ?>"
           max="<?php echo $dateMax ?>" placeholder="Data de Nascimento" required value="<?php echo $dateOfBirth ?>">
         <div class="invalid-feedback"></div>
       </div>

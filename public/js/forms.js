@@ -3,10 +3,17 @@ $(document).ready(function () {
     let baseUrl = $("meta[name='baseUrl']").attr("content");
 
     $('.cpf').on('input', function () {
+        // Remove tudo que não é número
         let value = $(this).val().replace(/\D/g, '');
+
+        // Limita a 11 dígitos
+        value = value.substr(0, 11);
+
+        // Aplica a máscara de CPF
         value = value.replace(/(\d{3})(\d)/, '$1.$2');
         value = value.replace(/(\d{3})(\d)/, '$1.$2');
         value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
         $(this).val(value);
     });
 
@@ -19,10 +26,11 @@ $(document).ready(function () {
         form.find('.invalid-feedback').text('');
         form.find('.is-invalid').removeClass('is-invalid');
 
-        form.find('input, textarea').each(function () {
+        form.find('input, textarea, email, password').each(function () {
             let input = $(this);
             let feedback = input.siblings('.invalid-feedback');
             let val = input.val().trim();
+            let type = input.attr('type');
 
             // Campo obrigatório
             if (input.prop('required') && val === '') {
@@ -47,25 +55,41 @@ $(document).ready(function () {
                 feedback.text(`Máximo ${max} caracteres.`);
                 input.addClass('is-invalid');
                 valid = false;
+                return true;
+            }
+
+            // valida CPF
+            if (type == 'text' && input.hasClass('cpf') && val) {
+                if (!isValidCpf(val)) {
+                    isValid = false;
+                    input.addClass('is-invalid');
+                    feedback.text('Informe um CPF válido.');
+                    valid = false;
+                    return true;
+                }
             }
 
             // valida email
-            if (input.name === 'email' && val) {
+            if (type == 'email' && val) {
                 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailPattern.test(val)) {
                     isValid = false;
                     input.addClass('is-invalid');
                     feedback.text('Informe um e-mail válido.');
+                    valid = false;
+                    return true;
                 }
             }
 
             // valida senha forte
-            if (input.name === 'password' && val) {
+            if (type == 'password' && val) {
                 const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
                 if (!strongPassword.test(val)) {
                     isValid = false;
                     input.addClass('is-invalid');
                     feedback.text('A senha deve ter no mínimo 8 caracteres, incluindo letras maiúsculas, minúsculas, números e símbolos.');
+                    valid = false;
+                    return true;
                 }
             }
 
@@ -212,7 +236,33 @@ $(document).ready(function () {
     });
 
 
+    var isValidCpf = function (cpf) {
+        cpf = cpf.replace(/\D/g, ''); // remove tudo que não for número
+        if (cpf.length !== 11) return false;
 
+        // Checa se todos os números são iguais (CPF inválido)
+        if (/^(\d)\1{10}$/.test(cpf)) return false;
+
+        // Valida primeiro dígito verificador
+        let sum = 0;
+        for (let i = 0; i < 9; i++) {
+            sum += parseInt(cpf.charAt(i)) * (10 - i);
+        }
+        let firstCheck = (sum * 10) % 11;
+        if (firstCheck === 10) firstCheck = 0;
+        if (firstCheck !== parseInt(cpf.charAt(9))) return false;
+
+        // Valida segundo dígito verificador
+        sum = 0;
+        for (let i = 0; i < 10; i++) {
+            sum += parseInt(cpf.charAt(i)) * (11 - i);
+        }
+        let secondCheck = (sum * 10) % 11;
+        if (secondCheck === 10) secondCheck = 0;
+        if (secondCheck !== parseInt(cpf.charAt(10))) return false;
+
+        return true;
+    };
 
     var modalDelete = function (id, message, deleteUrl) {
         return `
