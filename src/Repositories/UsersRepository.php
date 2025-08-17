@@ -38,6 +38,17 @@ class UsersRepository extends Repository
         return $this->consult($params);
     }
 
+    /**
+     * Recupera usuários do banco de dados.
+     *
+     * Esta função:
+     * 1. Cria os parâmetros de filtro para apenas usuários não deletados (`deleted_at IS NULL`).
+     * 2. Se um ID for fornecido, filtra especificamente pelo usuário com esse ID.
+     * 3. Chama a função `consult()` (provavelmente do repositório) para retornar os resultados.
+     *
+     * @param int|null $id ID do usuário (opcional). Se fornecido, retorna apenas esse usuário.
+     * @return array Array contendo os dados dos usuários encontrados.
+     */
     public function getUsers($id = null): array
     {
         $params = [];
@@ -50,6 +61,17 @@ class UsersRepository extends Repository
         return $this->consult($params);
     }
 
+    /**
+     * Cria ou atualiza um usuário no banco de dados.
+     *
+     * Esta função:
+     * 1. Prepara os dados do usuário para inserção ou atualização, incluindo `name`, `email`, `password` e `updated_at`.
+     * 2. Se o array $fields contiver um `id`, chama a função `alter()` para atualizar o registro existente.
+     * 3. Caso contrário, chama a função `insert()` para criar um novo registro.
+     *
+     * @param array $fields Array associativo contendo os campos do usuário: 'name', 'email', 'password' e opcionalmente 'id'.
+     * @return int ID do registro inserido ou número de linhas afetadas na atualização.
+     */
     public function register(array $fields): int
     {
         $params = [];
