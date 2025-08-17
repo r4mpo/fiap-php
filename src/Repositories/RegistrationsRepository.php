@@ -105,4 +105,57 @@ class RegistrationsRepository extends Repository
         // Executa a consulta no banco de dados com os parâmetros definidos
         return $this->consult($params);
     }
+
+    /**
+     * Verifica se um aluno já está registrado em uma turma específica.
+     *
+     * Regras aplicadas:
+     * - Filtra pelo ID do aluno ($studentId).
+     * - Filtra pelo ID da turma ($classId).
+     * - Garante que o vínculo não tenha sido excluído (deleted_at IS NULL).
+     *
+     * Caso exista um registro correspondente no banco de dados,
+     * significa que o aluno já está cadastrado na turma.
+     *
+     * @param string $studentId ID do aluno a ser verificado.
+     * @param string $classId   ID da turma a ser verificada.
+     * @return bool True se o aluno já estiver registrado na turma, False caso contrário.
+     */
+    public function isStudentRegistered(string $studentId, string $classId): bool
+    {
+        $params = [];
+        $params['FILTER']['classes_students_tbl.student_id'] = $studentId;
+        $params['FILTER']['classes_students_tbl.class_id'] = $classId;
+        $params['FILTER']['classes_students_tbl.deleted_at IS NULL'] = null;
+
+        // Executa a consulta no banco de dados com os parâmetros definidos
+        return !empty($this->consult($params));
+    }
+
+    /**
+     * Registra a matrícula de um aluno em uma turma.
+     *
+     * Regras aplicadas:
+     * - Define o ID do aluno ($studentId) a ser vinculado.
+     * - Define o ID da turma ($classId) onde o aluno será matriculado.
+     * - Define a data/hora da última atualização (updated_at).
+     *
+     * Realiza a inserção dos dados na tabela de matrículas
+     * e retorna o número de linhas afetadas.
+     *
+     * @param string $studentId ID do aluno que será matriculado.
+     * @param string $classId   ID da turma onde o aluno será matriculado.
+     * @return int Número de linhas afetadas pela inserção.
+     */
+    public function registerStudent(string $studentId, string $classId): int
+    {
+        // Define os dados a serem inseridos na tabela de matrículas
+        $params = [];
+        $params['SET']['student_id'] = $studentId;
+        $params['SET']['class_id'] = $classId;
+        $params['SET']['updated_at'] = date('Y-m-d H:i:s');
+
+        // Insere os dados na tabela e retorna o número de linhas afetadas
+        return $this->insert($params);
+    }
 }

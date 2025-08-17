@@ -113,12 +113,63 @@ class RegistrationsService
         if (!empty($data)) {
             foreach ($data as $student) {
                 $students[] = [
-                    'id' => base64urlEncode($student['id']),
+                    'id' => $student['id'],
                     'name' => $student['name'],
                 ];
             }
         }
 
         return $students;
+    }
+
+    /**
+     * Registra a matrícula de um aluno em uma turma.
+     *
+     * Processos realizados:
+     * 1. Define um retorno padrão de erro (code 333) caso algo falhe.
+     * 2. Verifica se os parâmetros obrigatórios `student_id` e `class_id` foram informados.
+     * 3. Decodifica os IDs recebidos em Base64 para obter os valores reais.
+     * 4. Verifica no repositório se o aluno já está matriculado na turma:
+     *    - Se já estiver, retorna um código de aviso (code 222) com a mensagem adequada.
+     * 5. Caso não esteja matriculado:
+     *    - Chama o repositório para registrar a matrícula.
+     *    - Se a operação afetar pelo menos uma linha no banco, retorna sucesso (code 111),
+     *      incluindo mensagem de confirmação e redirecionamento para a tela da turma.
+     * 6. Retorna o resultado da operação (sucesso, erro ou já registrado).
+     *
+     * @param array $params Parâmetros recebidos contendo os IDs do aluno e da turma.
+     *                      Espera-se que venham codificados em Base64URL.
+     * @return array Estrutura com código, mensagem e, em caso de sucesso, URL de redirecionamento.
+     */
+    public function registerStudent(array $params): array
+    {
+        $result = [];
+        $result['code'] = '333';
+        $result['message'] = 'Houve um erro ao efetuar a matricula.';
+
+        if (isset($params['student_id']) && isset($params['class_id'])) {
+            $studentId = base64urlDecode($params['student_id']);
+            $classId = base64urlDecode($params['class_id']);
+
+
+            $alreadyRegistered = $this->registrationsRepository->isStudentRegistered($studentId, $classId);
+            
+            if ($alreadyRegistered) {
+                $result['code'] = '222';
+                $result['message'] = 'O aluno já está matriculado nesta turma.';
+                return $result;
+            }
+
+            // Chama o repositório para registrar a matrícula
+            $rowAffected = $this->registrationsRepository->registerStudent($studentId, $classId);
+
+            if ($rowAffected > 0) {
+                $result['code'] = '111';
+                $result['message'] = 'Matrícula efetuada com sucesso.';
+                $result['redirect'] = BASE_URL . '/registrations/' . $params['class_id'];
+            }
+        }
+
+        return $result;
     }
 }

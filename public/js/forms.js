@@ -107,6 +107,8 @@ $(document).ready(function () {
                         setTimeout(() => {
                             window.location.href = response.redirect;
                         }, 1000);
+                    } else if (response.code === '222') {
+                        message('Oops!', response.message ?? 'Esta operação está indisponível no momento.', 'warning');
                     } else {
                         message('Oops!', response.message ?? 'Houve um erro ao realizar a operação.', 'error');
                     }

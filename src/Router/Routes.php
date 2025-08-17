@@ -35,6 +35,7 @@ class Routes
             // Matrículas
             '/registrations' => 'RegistrationsController@index',
             '/newRegistration/{params}' => 'RegistrationsController@newRegistration',
+            '/exeDataRegistrations' => 'RegistrationsController@exeData',
             '/registrations/{params}' => 'RegistrationsController@search',
         ];
     }

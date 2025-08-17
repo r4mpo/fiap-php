@@ -94,4 +94,23 @@ class RegistrationsController extends Controller
             'students' => $students,
         ]);
     }
+
+    /**
+     * Executa o processo de matrícula a partir dos dados recebidos na requisição.
+     *
+     * Processos realizados:
+     * 1. Recupera os dados de entrada (provavelmente do formulário ou requisição HTTP).
+     * 2. Chama o serviço de matrículas (`registrationsService`) para registrar o aluno.
+     * 3. Retorna o resultado da operação no formato JSON para o cliente.
+     * 4. Interrompe a execução do script após enviar a resposta.
+     *
+     * @return void
+     */
+    public function exeData(): void
+    {
+        // Chama o serviço para processar a matrícula
+        $execute = $this->registrationsService->registerStudent($this->input());
+        echo json_encode($execute);
+        exit;
+    }
 }
