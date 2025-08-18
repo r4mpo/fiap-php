@@ -29,7 +29,7 @@ git clone https://github.com/r4mpo/fiap-php.git
 ### 3. Configurar conexão com o banco
 - Copie o arquivo:
   ```bash
-  ./config/database_exemple.php
+  ./config/database_example.php
   ```
 - Renomeie para:
   ```bash
