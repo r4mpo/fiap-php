@@ -2,7 +2,7 @@
     "name": "erick/crud-mvc-php-default",
     "autoload": {
         "psr-4": {
-            "src\\": "src"
+            "Src\\": "src"
         }
     },
     "authors": [
